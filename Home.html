@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRITLab Africa Bootcamp</title>
+   <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #000;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    header {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 20px 0;
+      z-index: 1000;
+      background-color: #fff;
+    }
+
+    .logo {
+      color: #000;
+      font-weight: 700;
+      font-size: 24px;
+      float: left;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo-container {
+      z-index: 2; /* Ensure logo stays above nav */
+    }
+
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 15px; /* Adjust spacing between items */
+    padding: 0;
+    margin: 0;
+    }
+
+    nav ul li {
+      margin-left: 25px;
+    }
+
+    nav ul li a {
+      color: #000;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a.active {
+      color: darkgoldenrod;
+    }
+
+    nav ul li a:hover {
+      color: darkgoldenrod;
+    }
+
+    .cta-btn {
+      background-color: darkgoldenrod;
+      color: #000 !important;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background-color: #b8860b;
+    }
+
+    .mobile-toggle {
+      background: transparent;
+      border: none;
+      color: #000 !important;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      display: none;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+.about-gritlab {
+  padding: 3rem 0;
+  background: #f8f9fa;
+}
+
+.about-content-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #eaeaea;
+}
+
+.about-content {
+  line-height: 1.7;
+  color: #333;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+}
+
+.content-divider {
+  width: 100%;
+  border: none;
+  border-top: 2px solid darkgoldenrod;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        position: relative;
+        background-color: #fff;
+        padding: 15px 0;
+      }
+      
+      .logo {
+        font-size: 20px;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: -250px;
+        width: 250px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        transform: none;
+        transition: transform 0.3s ease;
+        padding: 80px 30px 30px;
+    }
+      
+      .mobile-toggle {
+        display: block;
+      }
+
+      nav.active {
+        display: block;
+      }
+
+      nav.active ul {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 80px 30px 30px;
+        align-items: flex-start;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s forwards;
+      }
+
+      nav ul li {
+        margin: 15px 0;
+      }
+
+      nav ul li a {
+        font-size: 16px;
+      }
+      nav.active {
+        transform: translateX(-100%);
+      }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+    }
+
+    .hero {
+      height: 100vh;
+      background-image: linear-gradient(rgba(226, 221, 221, 0.7), rgba(226, 221, 221, 0.7)), url('src/img/GLA.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #000;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 20px 0;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 120px;
+    }
+
+    .watch-video {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid darkgoldenrod;
+      color: darkgoldenrod;
+      padding: 10px 18px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .watch-video i {
+      margin-right: 8px;
+      font-size: 11px;
+      background: darkgoldenrod;
+      color: #000;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .watch-video:hover {
+      background-color: darkgoldenrod;
+      color: #000;
+      box-shadow: 0 5px 15px rgba(184, 134, 11, 0.4);
+    }
+
+    .watch-video:hover i {
+      background-color: #000;
+      color: darkgoldenrod;
+      transform: scale(1.1);
+    }
+
+    .featured-projects {
+      position: relative;
+      margin-top: -100px;
+    }
+
+    .project-cards {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 5px;
+      padding: 30px;
+      flex: 1;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(184, 134, 11, 0.3);
+    }
+
+    .project-card .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: darkgoldenrod;
+      position: relative;
+    }
+
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #000;
+    }
+
+    .project-card p {
+      color: #000;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .read-more {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: darkgoldenrod;
+      color: #000;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      transition: background-color 0.3s;
+    }
+
+    .read-more:hover {
+      background-color: #b8860b;
+    }
+
+    .glow {
+      position: relative;
+    }
+
+    .glow::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, darkgoldenrod, #f1c40f, #e67e22, darkgoldenrod);
+      z-index: -1;
+      border-radius: 7px;
+      background-size: 400%;
+      animation: glowing 20s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .glow:hover::before {
+      opacity: 1;
+    }
+
+    .glow.active::before {
+      opacity: 0.8;
+    }
+
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    .additional-projects {
+      padding: 80px 0;
+      background-color: #f9f6f0;
+    }
+
+    .additional-projects h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 50px;
+      color: #000;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .project-item {
+      background: white;
+      border-radius: 5px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(184, 134, 11, 0.2);
+    }
+
+    .project-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: darkgoldenrod;
+      background-color: #f5f5f5;
+      border-radius: 50%;
+    }
+
+    .project-item h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .project-item p {
+      color: #000;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    .visit-link {
+      display: inline-block;
+      color: darkgoldenrod;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .visit-link:hover {
+      color: #b8860b;
+    }
+
+    
+
+    footer {
+      background-color: #111;
+      color: #000;
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .footer-links h4,
+    .footer-contact h4,
+    .footer-social h4 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .footer-links ul li a:hover {
+      color: darkgoldenrod;
+    }
+
+    .footer-contact p {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      color: #ffffff;
+      background-color: #333;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+
+    .social-icons a:hover {
+      background-color: darkgoldenrod;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #000   #000 !important;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    @media (max-width: 991px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      
+      .project-cards {
+        flex-direction: column;
+      }
+      
+      .featured-projects {
+        margin-top: 0;
+      }
+      
+      .hero {
+        height: auto;
+        padding: 120px 0 60px;
+      }
+      
+      .hero-subtitle {
+        margin-bottom: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        position: relative;
+        background-color: #fff;
+        padding: 15px 0;
+      }
+      
+      .logo {
+        font-size: 20px;
+      }
+      
+      nav {
+        display: none;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+      }
+      
+      .mobile-toggle {
+        display: block;
+      }
+
+      nav.active ul {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 80px 30px 30px;
+        align-items: flex-start;
+        box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s forwards;
+      }
+
+      .logo-container {
+        gap: 8px;
+    }
+    .app-name {
+        font-size: 1rem;
+    }
+    nav {
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: -250px;
+        width: 250px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        transform: none;
+        transition: transform 0.3s ease;
+        padding: 80px 30px 30px;
+      }
+
+      nav.active {
+        transform: translateX(-100%);
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      nav ul li {
+        margin: 15px 0;
+      }
+
+      nav ul li a {
+        font-size: 16px;
+      }
+      
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .html {
+  scroll-behavior: smooth;
+}
+
+    }
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
+.app-name {
+    font-size: 1.2rem;
+    font-weight: 800; /* Extra-bold */
+    color: black; /* Black text */
+    text-decoration: underline;
+    text-decoration-color: darkgoldenrod; /* Golden underline */
+    text-underline-offset: 5px; /* Space between text & underline */
+    text-decoration-thickness: 2px; /* Thicker underline */
+}
+
+/*Intro*/
+
+/* Intro Overlay */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(10px); /* Blurry background */
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.intro-overlay.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-text {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6); /* Glow effect */
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-text {
+    font-size: 2.5rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="intro-overlay">
+        <img src="assets/images/logo.png" alt="ECOWAS Logo" href="index.html" class="intro-text" style="max-height: 70px;">
+        <span class="app-name">GRITLab Africa Bootcamp</span>
+
+  </div>
+<header>
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/images/logo.png" alt="ECOWAS Logo" class="logo-img" style="max-height: 50px;">
+            <span class="app-name">GRITLab Africa Bootcamp</span>
+        </div>
+      
+        <button type="button" class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+
+                <li><a href="#projects">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="projects.html" class="cta-btn">Apply</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+  <section class="hero">
+  <div class="container">
+    <h1>Welcome to the <br>GritLab Africa Chapter Zero Bootcamp</h1>
+    <p class="hero-subtitle">
+      A transformative Python programming bootcamp designed to equip beginners with in-demand coding skills. 
+      Dive into hands-on projects, real-world problem-solving, and a community-driven learning experience 
+      to kickstart your tech journey in Africa.
+    </p>
+
+    <a href="https://www.youtube.com/watch?v=rLeIFHlgXW8" target="_blank" class="watch-video">
+      <i class="fas fa-play"></i> WATCH 2024 VIDEO
+    </a>
+  </div>
+</section>
+
+
+
+<section class="about-gritlab">
+  <div class="container">
+    <div class="about-content-card">
+      <hr class="content-divider">
+      <h2 style="color: darkgoldenrod;">About GRIT Lab Africa</h2>
+      <div class="about-content">
+        <p>GRIT Lab Africa was founded by Prof. Abejide Ade-Ibijola with a mission to provide free computer programming skills training along with mentoring in mindset, discipline, and GRIT to young people across Africa.</p>
+        
+        <p>Our vision is to create an inclusive space that trains diverse young Africans - regardless of background, gender, race, religion, or ethnicity - to become computer programming champions. We build not just technical skills, but develop regimented personalities with good hearts for helping peers and solving societal problems through technology.</p>
+        
+        <p>In five years of running GRIT Lab, we've trained hundreds of young Africans in both technical skills and character. Our graduates have gone on to secure jobs in South Africa's technology industry, create their own tech ventures, and contribute to building a strong community of problem-solvers and innovators across the continent.</p>
+
+        <a href="projects.html" style="text-align:center" class="cta-btn">Apply</a>
+      </div>
+      <hr class="content-divider">
+    </div>
+  </div>
+</section>
+
+
+   
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <img src="assets/images/logo.png" alt="ECOWAS Logo" class="logo-img" style="max-height: 50px;">
+        <div class="footer-links">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Teams.html">Team</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+         <p>Email: jbs.innovation@uj.ac.za</p>
+        <p>Phone: +27 63 155 2047</p>
+        </div>
+       
+      </div>
+      <div class="copyright">
+        <p>© 2025 Apps GritLab Africa . All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  // Mobile Menu Toggle
+  const mobileToggle = document.querySelector('.mobile-toggle');
+  const nav = document.querySelector('nav');
+  
+// Intro animation
+  const introOverlay = document.querySelector('.intro-overlay');
+  if (introOverlay) {
+    setTimeout(() => {
+      introOverlay.classList.add('hide');
+      setTimeout(() => {
+        introOverlay.remove(); // Remove from DOM after fade-out
+      }, 500); // Match transition duration
+    }, 3000); // Display for 3 seconds
+  }
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      nav.classList.toggle('active');
+      
+      // Toggle between hamburger and close icon
+      const icon = this.querySelector('i');
+      if (nav.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target) && e.target !== mobileToggle && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        const icon = mobileToggle.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Close menu when clicking on a nav link (for smooth scrolling)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        if (nav.classList.contains('active')) {
+          nav.classList.remove('active');
+          const icon = mobileToggle.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+    });
+  }
+
+  
+
+
+  // Animate elements on scroll
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.project-card, .project-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(element => {
+      element.style.opacity = 0;
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(element);
+    });
+  };
+
+  // Glow effect enhancement
+  const enhanceGlowEffects = () => {
+    const glowElements = document.querySelectorAll('.glow');
+    
+    glowElements.forEach(element => {
+      element.addEventListener('mouseenter', () => {
+        element.classList.add('active');
+      });
+      
+      element.addEventListener('mouseleave', () => {
+        element.classList.remove('active');
+      });
+    });
+  };
+
+  // Smooth scrolling for anchor links
+  const initSmoothScroll = () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const target = document.querySelector(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  };
+
+  // Video modal functionality
+  const initVideoModal = () => {
+    const videoBtn = document.querySelector('.watch-video');
+    if (!videoBtn) return;
+
+    videoBtn.addEventListener('click', function() {
+      const backdrop = document.createElement('div');
+      backdrop.className = 'video-backdrop';
+      backdrop.style.position = 'fixed';
+      backdrop.style.top = '0';
+      backdrop.style.left = '0';
+      backdrop.style.width = '100%';
+      backdrop.style.height = '100%';
+      backdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+      backdrop.style.zIndex = '1000';
+      backdrop.style.display = 'flex';
+      backdrop.style.alignItems = 'center';
+      backdrop.style.justifyContent = 'center';
+      backdrop.style.opacity = '0';
+      backdrop.style.transition = 'opacity 0.3s ease';
+      
+      const videoContainer = document.createElement('div');
+      videoContainer.className = 'video-container';
+      videoContainer.style.width = '80%';
+      videoContainer.style.maxWidth = '900px';
+      videoContainer.style.backgroundColor = '#000';
+      videoContainer.style.borderRadius = '8px';
+      videoContainer.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
+      videoContainer.style.transform = 'scale(0.9)';
+      videoContainer.style.transition = 'transform 0.3s ease';
+      
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'video-close-btn';
+      closeBtn.innerHTML = '×';
+      closeBtn.style.position = 'absolute';
+      closeBtn.style.top = '10px';
+      closeBtn.style.right = '15px';
+      closeBtn.style.background = 'none';
+      closeBtn.style.border = 'none';
+      closeBtn.style.color = '#fff';
+      closeBtn.style.fontSize = '24px';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.style.zIndex = '1001';
+      
+      const videoPlaceholder = document.createElement('div');
+      videoPlaceholder.className = 'video-iframe-container';
+      videoPlaceholder.style.padding = '56.25% 0 0 0';
+      videoPlaceholder.style.position = 'relative';
+      videoPlaceholder.style.borderRadius = '8px';
+      videoPlaceholder.style.overflow = 'hidden';
+      
+      const videoContent = document.createElement('iframe');
+      videoContent.className = 'video-iframe';
+      videoContent.style.position = 'absolute';
+      videoContent.style.top = '0';
+      videoContent.style.left = '0';
+      videoContent.style.width = '100%';
+      videoContent.style.height = '100%';
+      videoContent.style.backgroundColor = '#111';
+      videoContent.src = 'https://www.youtube.com/embed/mzTZ7lX4yVo?autoplay=1&controls=1&modestbranding=1&rel=0&showinfo=0';
+      videoContent.setAttribute('allow', 'autoplay; encrypted-media');
+      videoContent.setAttribute('allowfullscreen', '');
+      videoContent.setAttribute('frameborder', '0');
+      
+      videoPlaceholder.appendChild(videoContent);
+      videoContainer.appendChild(videoPlaceholder);
+      backdrop.appendChild(closeBtn);
+      backdrop.appendChild(videoContainer);
+      document.body.appendChild(backdrop);
+      
+      // Disable body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+      
+      setTimeout(() => {
+        backdrop.style.opacity = '1';
+        videoContainer.style.transform = 'scale(1)';
+      }, 10);
+      
+      const closeModal = function() {
+        videoContent.src = '';
+        backdrop.style.opacity = '0';
+        videoContainer.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          document.body.removeChild(backdrop);
+          document.body.style.overflow = '';
+        }, 300);
+      };
+      
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === backdrop) closeModal();
+      });
+      
+      // Close with Escape key
+      document.addEventListener('keydown', function escClose(e) {
+        if (e.key === 'Escape') {
+          closeModal();
+          document.removeEventListener('keydown', escClose);
+        }
+      });
+    });
+  };
+
+  // Initialize all functions
+  animateOnScroll();
+  enhanceGlowEffects();
+  initSmoothScroll();
+  initVideoModal();
+});
+  </script>
+</body>
+</html>
