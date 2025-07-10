@@ -646,7 +646,16 @@
   </style>
 </head>
 <body>
+  <div class="intro-overlay">
+        <img src="assets/images/logo.png" alt="ECOWAS Logo" href="Home.html" class="intro-text" style="max-height: 70px;">
+        <span class="app-name">GRITLab Africa Bootcamp</span>
+
+  </div>
   <header>
+
+
+
+
     <div class="container">
       <div class="logo-container">
         <img src="assets/images/logo.png" alt="ECOWAS Logo" class="logo-img" style="max-height: 50px;">
@@ -658,7 +667,7 @@
         <ul>
           <li><a href="Home.html">Home</a></li>
           <li><a href="GLAdashboard.html" class="active">Dashboard</a></li>
-           <li><a href="Apply.html" class="cta-btn">Log Out</a></li>
+           <li><a href="Home.html" class="cta-btn">Log Out</a></li>
         </ul>
       </nav>
     </div>
@@ -807,6 +816,23 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', function() {
+  // Check if user is logged in
+  if (sessionStorage.getItem('sessionId') !== '1') {
+    // If not logged in, redirect to login page
+    window.location.href = 'GLAAdmin.html'; // Change to your login page filename
+  }
+
+  // Logout functionality
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      sessionStorage.removeItem('sessionId');
+      window.location.href = 'GLAAdmin.html';
+    });
+  }
+});
 
     // DOM Elements
     const applicationsTableBody = document.getElementById('applicationsTableBody');
@@ -1139,6 +1165,16 @@
         }
       });
     }
+
+    const introOverlay = document.querySelector('.intro-overlay');
+  if (introOverlay) {
+    setTimeout(() => {
+      introOverlay.classList.add('hide');
+      setTimeout(() => {
+        introOverlay.remove(); // Remove from DOM after fade-out
+      }, 500); // Match transition duration
+    }, 1000); // Display for 3 seconds
+  }
 
     // Download transcript
     function downloadTranscript(appId, transcriptBase64) {
