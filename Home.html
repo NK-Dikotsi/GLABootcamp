@@ -756,12 +756,84 @@
     font-size: 2.5rem;
   }
 }
+.testimonials-section {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+  }
+  
+  .testimonials-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+  }
+  
+  .testimonials-track {
+    display: flex;
+    gap: 2rem;
+    animation: scroll 30s linear infinite;
+    width: calc(300% + 6rem); /* Adjust based on number of testimonials */
+  }
+  
+  .testimonial-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 350px;
+    min-width: 300px;
+    transition: transform 0.3s ease;
+    border: 1px solid #eaeaea;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  
+  .testimonial-icon {
+    color: darkgoldenrod;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-header {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .testimonial-text {
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% - 2rem)); /* Adjust based on number of testimonials */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .testimonials-track {
+      animation: scroll 60s linear infinite;
+    }
+    
+    .testimonial-card {
+      min-width: 250px;
+    }
+  }
 
-  </style>
+</style>
 </head>
 <body>
   <div class="intro-overlay">
-        <img src="assets/images/logo.png" alt="ECOWAS Logo" href="index.html" class="intro-text" style="max-height: 70px;">
+        <img src="assets/images/logo.png" alt="ECOWAS Logo" href="Home.html" class="intro-text" style="max-height: 70px;">
         <span class="app-name">GRITLab Africa Bootcamp</span>
 
   </div>
@@ -777,15 +849,15 @@
             <ul>
                 <li><a href="#" class="active">Home</a></li>
 
-                <li><a href="#projects">About</a></li>
+                <li><a href="#About">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="projects.html" class="cta-btn">Apply</a></li>
+                <li><a href="Apply.html" class="cta-btn">Apply</a></li>
             </ul>
         </nav>
     </div>
 </header>
 
-  <section class="hero">
+  <section class="hero" >
   <div class="container">
     <h1>Welcome to the <br>GritLab Africa Chapter Zero Bootcamp</h1>
     <p class="hero-subtitle">
@@ -802,7 +874,7 @@
 
 
 
-<section class="about-gritlab">
+<section class="about-gritlab" id="About">
   <div class="container">
     <div class="about-content-card">
       <hr class="content-divider">
@@ -814,13 +886,240 @@
         
         <p>In five years of running GRIT Lab, we've trained hundreds of young Africans in both technical skills and character. Our graduates have gone on to secure jobs in South Africa's technology industry, create their own tech ventures, and contribute to building a strong community of problem-solvers and innovators across the continent.</p>
 
-        <a href="projects.html" style="text-align:center" class="cta-btn">Apply</a>
+        <a href="About.html" style="text-align:center" class="cta-btn">Apply</a>
       </div>
       <hr class="content-divider">
     </div>
   </div>
 </section>
 
+
+<section class="testimonials-section">
+  <div class="container">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: darkgoldenrod;">What Our Students Say</h2>
+    
+    <div class="testimonials-container">
+      <div class="testimonials-track">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-090</div>
+          <p class="testimonial-text">"I found it very interesting and motivating, not only for the bootcamp but also for my studies. I'm more motivated than ever to do well and achieve my best."</p>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-026</div>
+          <p class="testimonial-text">"I enjoyed the whole chapter zero experience. I felt motivated, and I'm excited for everything that is to come."</p>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-010</div>
+          <p class="testimonial-text">"The chapter zero itself, I was sold a dream and I bought it."</p>
+        </div>
+        
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-426</div>
+          <p class="testimonial-text">"I really enjoyed Chapter Zero... What was particularly more interesting for me was the student demonstrations as they show the real-life applications of programming... I was inspired to want to pursue my dream of programming."</p>
+        </div>
+        
+        <!-- Testimonial 5 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-453</div>
+          <p class="testimonial-text">"Mind-blowing. It's a must to have Grit/bravado... And to never diminish myself. It was the student's demo and chapter zero itself."</p>
+        </div>
+        
+        <!-- Testimonial 6 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-352</div>
+          <p class="testimonial-text">"I loved how students doing my course who are only in the second year are already building 3 games and applications that are being monetized and used in the real world."</p>
+        </div>
+        
+        <!-- Testimonial 7 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-407</div>
+          <p class="testimonial-text">"The chapter 0 event was very impactful. Having such an opportunity made me even more grateful... I'm glad I am part of the team and I am willing to learn and acquire many skills."</p>
+        </div>
+        
+        <!-- Testimonial 8 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-217</div>
+          <p class="testimonial-text">"It was a great experience. Definitely eye-opening on the journey I am about to embark on... I learnt that with hard work and discipline I can achieve much greater than I think I can."</p>
+        </div>
+        
+        <!-- Testimonial 9 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-032</div>
+          <p class="testimonial-text">"It mostly shed light on how much I can improve my skills in a short span of time... Seeing the students show off their work encouraged me to expect more from myself."</p>
+        </div>
+        
+        <!-- Testimonial 10 -->
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-459</div>
+          <p class="testimonial-text">"Had a great time, definitely learnt something... I learnt that being a hard worker pays off.</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-097</div>
+          <p class="testimonial-text">"Prof. Abejide Ade-Ibijola's keynote took the cake... I feel like I'm kind of experienced in the programming space but he showed me there's always more to learn.</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-445</div>
+          <p class="testimonial-text">"It was truly an inspiring experience. Prof's students were motivational... The whole experience was worth it because each speaker left me with something to take home."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-273</div>
+          <p class="testimonial-text">"Everything was interesting because after the #ChapterZero event I felt like a completely different person... I love the code 'your attitude will determine your altitude."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-382</div>
+          <p class="testimonial-text">"It was an enjoyable and eye-opening experience... I could still see the family that you were talking about in the emails and videos."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-287</div>
+          <p class="testimonial-text">"It was an amazing experience!... It made me realize how much one can actually do things if they actually put their mind into it"</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-068</div>
+          <p class="testimonial-text">"It was a great experience... It made me realize that if I want to be the best I must be willing to work harder than anyone else."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-192</div>
+          <p class="testimonial-text">"I I got to be sold a dream that I am currently in a state of buying it... I found it shocking that they are more boys than girls (in tech). I hope we change that."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-329</div>
+          <p class="testimonial-text">"I genuinely enjoyed everything... Prof is such a fun and nice person to be around. I can't wait!"</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-100</div>
+          <p class="testimonial-text">"I actually enjoyed it... I learned to have an EAGLE mindset."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-159</div>
+          <p class="testimonial-text">"After the event, I became confident that even though I know nothing about programming, I will excel as long as I put in the effort... I’ve socialized with a few peers already and I feel that I will make it.!"</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-148</div>
+          <p class="testimonial-text">"It was mind-blowing... Seeing the student's demo made me feel like I can also do it! I'm so excited!"</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-454</div>
+          <p class="testimonial-text">"I had a nice experience... I was motivated by the students... I gained something from Prof when he was selling me a dream.</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-031</div>
+          <p class="testimonial-text">"I enjoyed my time at the event... Hard work pays off, and I witnessed that by the former students who are now employed.</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-205</div>
+          <p class="testimonial-text">"I was sold a dream, and I am determined to work hard... The student demos and chapter zero talk were quite fascinating and left me feeling inspired."</p>
+        </div>
+       
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-031</div>
+          <p class="testimonial-text">"It was amazing, personally I was inspired... Seeing other students of my age coming up with exquisite creations, my mind was entirely blown away."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-389</div>
+          <p class="testimonial-text">"The whole event was awesome... Prof Abejide Ade-Ibijola's presentation really changed the way I view life... He definitely 'sold me a dream' and I bought it."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-403</div>
+          <p class="testimonial-text">"I loved every aspect of chapter zero... The presentation on chapter zero itself was most interesting because of the unique approach that will be taken to teach us."</p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fas fa-quote-left"></i>
+          </div>
+          <div class="testimonial-header">JBS-GL-155</div>
+          <p class="testimonial-text">"Prof. completely changed my mindset... 'There is no such thing as an intelligent person'... Overall, I am really looking forward to being a sponge in this bootcamp"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
    
 
@@ -831,7 +1130,7 @@
         <div class="footer-links">
           <h4>Links</h4>
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="Home.html">Home</a></li>
             <li><a href="Teams.html">Team</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="">Contact</a></li>
@@ -845,7 +1144,7 @@
        
       </div>
       <div class="copyright">
-        <p>© 2025 Apps GritLab Africa . All rights reserved.</p>
+        <p>© 2025 GritLab Africa Bootcamp . All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -906,7 +1205,18 @@
     });
   }
 
-  
+  document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.testimonials-track');
+    if (track) {
+      track.addEventListener('mouseenter', function() {
+        this.style.animationPlayState = 'paused';
+      });
+      
+      track.addEventListener('mouseleave', function() {
+        this.style.animationPlayState = 'running';
+      });
+    }
+  });
 
 
   // Animate elements on scroll

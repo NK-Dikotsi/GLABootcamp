@@ -158,15 +158,48 @@
       z-index: 1;
     }
 
-    /* Courses Container - Updated */
+    /* Courses Container with Floating Warning */
     .courses-container {
       position: relative;
       z-index: 2;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      justify-content: center;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    .floating-warning {
+      background-color: rgba(218, 165, 32, 0.1);
+      border: 2px solid darkgoldenrod;
+      border-radius: 8px;
+      padding: 15px 20px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: pulseWarning 2s infinite;
+    }
+
+    @keyframes pulseWarning {
+      0% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(218, 165, 32, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0); }
+    }
+
+    .floating-warning i {
+      color: darkgoldenrod;
+      margin-right: 8px;
+    }
+
+    .courses-grid {
+      display: flex;
       gap: 60px;
       justify-content: center;
       flex-wrap: wrap;
-      padding: 2rem;
+      width: 100%;
     }
 
     .course-card {
@@ -182,7 +215,6 @@
       cursor: pointer;
     }
 
-    /* Hover effects similar to project cards */
     .course-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 15px 40px rgba(184, 134, 11, 0.3);
@@ -240,14 +272,14 @@
       line-height: 1.6;
     }
 
-    /* Application Form - Updated */
+    /* Application Form */
     .application-form-container {
       display: none;
       position: relative;
       z-index: 2;
       width: 100%;
       max-width: 600px;
-      margin: 0 auto;
+      margin: 100px auto 2rem;
       padding: 2rem;
     }
 
@@ -255,7 +287,7 @@
       background: white;
       border-radius: 10px;
       padding: 40px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
 
     .form-header {
@@ -267,29 +299,192 @@
 
     .form-header h3 {
       color: darkgoldenrod;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
     }
 
     .back-btn {
       background: none;
       border: none;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       cursor: pointer;
-      color: #666;
+      color: darkgoldenrod;
       transition: color 0.3s;
       display: flex;
       align-items: center;
-      gap: 8px;
     }
 
     .back-btn:hover {
+      color: #b8860b;
+    }
+
+    /* Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .warning-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .warning-popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .warning-icon {
+      font-size: 3rem;
+      color: darkgoldenrod;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .warning-message {
+      font-size: 1rem;
+      margin-bottom: 25px;
       color: #333;
+      line-height: 1.5;
+      text-align: center;
     }
 
-    .back-btn i {
-      font-size: 1.2rem;
+    .warning-ok-btn {
+      background: darkgoldenrod;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      display: block;
+      margin: 0 auto;
     }
 
+    .warning-ok-btn:hover {
+      background: #b8860b;
+    }
+
+    /* Success Popup */
+    .success-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .success-popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .checkmark {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: block;
+      stroke-width: 2;
+      stroke: darkgoldenrod;
+      stroke-miterlimit: 10;
+      margin: 0 auto 20px;
+      box-shadow: inset 0px 0px 0px darkgoldenrod;
+      animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+
+    .checkmark__circle {
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: darkgoldenrod;
+      fill: none;
+      animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .checkmark__check {
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
+    }
+
+    @keyframes stroke {
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scale {
+      0%, 100% { transform: none; }
+      50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+
+    @keyframes fill {
+      100% { box-shadow: inset 0px 0px 0px 30px rgba(218, 165, 32, 0.1); }
+    }
+
+    .success-message {
+      font-size: 1rem;
+      margin-bottom: 25px;
+      color: #333;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .success-ok-btn {
+      background: darkgoldenrod;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .success-ok-btn:hover {
+      background: #b8860b;
+    }
+
+    /* Form Styles */
     .form-group {
       margin-bottom: 1.8rem;
       position: relative;
@@ -403,6 +598,11 @@
       background: #b8860b;
     }
 
+    .apply-btn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+
     /* Footer Styles */
     footer {
       background-color: #111;
@@ -474,7 +674,7 @@
 
     /* Responsive Styles */
     @media (max-width: 992px) {
-      .courses-container {
+      .courses-grid {
         gap: 40px;
       }
     }
@@ -533,7 +733,7 @@
         background-size: cover;
       }
       
-      .courses-container {
+      .courses-grid {
         padding: 1rem;
         gap: 30px;
       }
@@ -545,6 +745,15 @@
 
       .application-form {
         padding: 30px 20px;
+      }
+
+      .application-form-container {
+        margin: 80px auto 2rem;
+      }
+
+      .warning-popup,
+      .success-popup {
+        width: 90%;
       }
     }
 
@@ -610,6 +819,28 @@
     <span class="app-name">GRITLab Africa Bootcamp</span>
   </div>
 
+  <!-- Popup Overlay -->
+  <div class="popup-overlay" id="popupOverlay"></div>
+
+  <!-- Warning Popup -->
+  <div class="warning-popup" id="warningPopup">
+    <div class="warning-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <p class="warning-message" id="warningMessage">You have already applied for a program.</p>
+    <button class="warning-ok-btn" id="warningOkBtn">OK</button>
+  </div>
+
+  <!-- Success Popup -->
+  <div class="success-popup" id="successPopup">
+    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+    </svg>
+    <p class="success-message" id="successMessage">Congratulations! Your application has been submitted successfully.</p>
+    <button class="success-ok-btn" id="successOkBtn">OK</button>
+  </div>
+
   <header>
     <div class="container">
       <div class="logo-container">
@@ -620,8 +851,8 @@
       <button type="button" class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -629,32 +860,39 @@
 
   <!-- Apply Hero Section -->
   <section class="apply-hero">
-    <!-- Courses Container (visible by default) -->
+    <!-- Courses Container with Floating Warning -->
     <div class="courses-container" id="coursesContainer">
-      <div class="course-card" onclick="showForm('Introduction to Python Programming and Algorithms')">
-        <div class="course-icon">
-          <i class="bi bi-file-earmark-code"></i>
-        </div>
-        <h3>Introduction to Python Programming and Algorithms</h3>
-        <p>Master foundational programming concepts with Python and essential algorithm design for effective problem solving in various domains. Perfect for beginners looking to start their coding journey.</p>
+      <div class="floating-warning">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Please note: You can only apply to one of these programs</span>
       </div>
       
-      <div class="course-card" onclick="showForm('Artificial Intelligence Applications in Africa')">
-        <div class="course-icon">
-          <i class="bi bi-robot"></i>
+      <div class="courses-grid">
+        <div class="course-card" data-course="Introduction to Python Programming and Algorithms">
+          <div class="course-icon">
+            <i class="bi bi-file-earmark-code"></i>
+          </div>
+          <h3>Introduction to Python Programming and Algorithms</h3>
+          <p>Master foundational programming concepts with Python and essential algorithm design for effective problem solving in various domains.</p>
         </div>
-        <h3>Artificial Intelligence Applications in Africa</h3>
-        <p>Explore practical applications of artificial intelligence tailored for African contexts, solving real-world challenges and creating innovative business solutions across the continent.</p>
+        
+        <div class="course-card" data-course="Artificial Intelligence Applications in Africa">
+          <div class="course-icon">
+            <i class="bi bi-robot"></i>
+          </div>
+          <h3>Artificial Intelligence Applications in Africa</h3>
+          <p>Explore practical applications of artificial intelligence tailored for African contexts, solving real-world challenges.</p>
+        </div>
       </div>
     </div>
     
-    <!-- Application Form Container (hidden by default) -->
+    <!-- Application Form Container -->
     <div class="application-form-container" id="applicationFormContainer">
       <div class="application-form">
         <div class="form-header">
           <h3 id="courseTitle">Application Form</h3>
-          <button class="back-btn" onclick="hideForm()">
-            <i class="fas fa-arrow-left"></i> Back
+          <button class="back-btn" id="backButton">
+            <i class="fas fa-arrow-left"></i>
           </button>
         </div>
         <form id="applicationFormElement">
@@ -672,18 +910,22 @@
           </div>
           <div class="form-group country-search-container">
             <label for="country">Country</label>
-            <input type="text" id="country" autocomplete="off" required placeholder="Start typing to search African countries">
+            <input type="text" id="country" autocomplete="off" required placeholder="Your Country">
             <div class="country-search-results" id="countryResults"></div>
           </div>
           <div class="form-group">
-            <label for="academicTranscript">Academic Transcript (PDF only)</label>
+            <label for="average">Current Semester Average</label>
+            <input type="number" id="average" required placeholder="%" min="0" max="100" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="academicTranscript">Academic Transcript (PDF only, max 5MB)</label>
             <label class="file-upload-label" for="academicTranscript">
               <i class="fas fa-cloud-upload-alt"></i> Choose PDF File
             </label>
             <input type="file" id="academicTranscript" class="file-upload-input" accept=".pdf" required>
             <div class="file-name" id="fileName">No file chosen</div>
           </div>
-          <button type="submit" class="apply-btn">APPLY NOW</button>
+          <button type="submit" class="apply-btn" id="submitBtn">APPLY NOW</button>
         </form>
       </div>
     </div>
@@ -713,7 +955,36 @@
     </div>
   </footer>
 
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+    import { 
+      getFirestore, 
+      collection, 
+      addDoc, 
+      query, 
+      where, 
+      getDocs 
+    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVrk2_Uaao4IadkqdW_ZHAcqhKaHgfA7A",
+      authDomain: "glabootcamp.firebaseapp.com",
+      databaseURL: "https://glabootcamp-default-rtdb.firebaseio.com",
+      projectId: "glabootcamp",
+      storageBucket: "glabootcamp.appspot.com",
+      messagingSenderId: "1019798214965",
+      appId: "1:1019798214965:web:71815c385b7a4a9f0ed47c",
+      measurementId: "G-JJ1Y2NSK96"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
     // List of African countries
     const africanCountries = [
       "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", 
@@ -727,6 +998,16 @@
       "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", 
       "Zambia", "Zimbabwe"
     ];
+
+    // Helper function to convert file to Base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
       // Intro animation
@@ -786,40 +1067,45 @@
       const countryInput = document.getElementById('country');
       const countryResults = document.getElementById('countryResults');
 
-      countryInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const filteredCountries = africanCountries.filter(country => 
-          country.toLowerCase().includes(searchTerm)
-          .slice(0, 5)); // Show max 5 results
-        
-        countryResults.innerHTML = '';
-        
-        if (searchTerm && filteredCountries.length > 0) {
-          filteredCountries.forEach(country => {
-            const option = document.createElement('div');
-            option.className = 'country-option';
-            option.textContent = country;
-            option.addEventListener('click', function() {
-              countryInput.value = country;
-              countryResults.classList.remove('show');
+      if (countryInput && countryResults) {
+        countryInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          const filteredCountries = africanCountries.filter(country => 
+            country.toLowerCase().includes(searchTerm)
+          ).slice(0, 5);
+          
+          countryResults.innerHTML = '';
+          
+          if (searchTerm && filteredCountries.length > 0) {
+            filteredCountries.forEach(country => {
+              const option = document.createElement('div');
+              option.className = 'country-option';
+              option.textContent = country;
+              option.addEventListener('click', function() {
+                countryInput.value = country;
+                countryResults.classList.remove('show');
+              });
+              countryResults.appendChild(option);
             });
-            countryResults.appendChild(option);
-          });
-          countryResults.classList.add('show');
-        } else {
-          countryResults.classList.remove('show');
-        }
-      });
+            countryResults.classList.add('show');
+          } else {
+            countryResults.classList.remove('show');
+          }
+        });
 
-      // Close dropdown when clicking outside
-      document.addEventListener('click', function(e) {
-        if (!countryInput.contains(e.target)) {
-          countryResults.classList.remove('show');
-        }
-      });
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!countryInput.contains(e.target) && !countryResults.contains(e.target)) {
+            countryResults.classList.remove('show');
+          }
+        });
+      }
 
       // Form Handling
+      let selectedCourse = '';
+      
       function showForm(course) {
+        selectedCourse = course;
         document.getElementById('courseTitle').textContent = `Apply for ${course}`;
         document.getElementById('coursesContainer').style.display = 'none';
         document.getElementById('applicationFormContainer').style.display = 'block';
@@ -830,13 +1116,75 @@
         document.getElementById('coursesContainer').style.display = 'flex';
       }
 
+      // Popup Management
+      const popupOverlay = document.getElementById('popupOverlay');
+      const warningPopup = document.getElementById('warningPopup');
+      const warningMessage = document.getElementById('warningMessage');
+      const warningOkBtn = document.getElementById('warningOkBtn');
+      const successPopup = document.getElementById('successPopup');
+      const successMessage = document.getElementById('successMessage');
+      const successOkBtn = document.getElementById('successOkBtn');
+      
+      function showPopup(popup) {
+        popupOverlay.classList.add('active');
+        popup.classList.add('active');
+      }
+      
+      function hidePopup(popup) {
+        popupOverlay.classList.remove('active');
+        popup.classList.remove('active');
+      }
+      
+      warningOkBtn.addEventListener('click', function() {
+        hidePopup(warningPopup);
+      });
+      
+      successOkBtn.addEventListener('click', function() {
+        hidePopup(successPopup);
+        hideForm();
+      });
+
+      // Initialize click handlers for course cards - direct to form
+      document.querySelectorAll('.course-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const courseTitle = this.getAttribute('data-course');
+          showForm(courseTitle);
+        });
+      });
+
+      // Back button
+      const backButton = document.getElementById('backButton');
+      if (backButton) {
+        backButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          hideForm();
+        });
+      }
+
       // File upload display
       const fileInput = document.getElementById('academicTranscript');
       const fileNameDisplay = document.getElementById('fileName');
+      const submitBtn = document.getElementById('submitBtn');
 
       if (fileInput && fileNameDisplay) {
         fileInput.addEventListener('change', function() {
           if (this.files && this.files.length > 0) {
+            // Check file size (max 750KB for Base64)
+            if (this.files[0].size > 750 * 1024) {
+              alert('File size exceeds 750KB limit. Please choose a smaller file.');
+              this.value = '';
+              fileNameDisplay.textContent = 'No file chosen';
+              return;
+            }
+            
+            // Check file type
+            if (!this.files[0].name.toLowerCase().endsWith('.pdf')) {
+              alert('Only PDF files are allowed.');
+              this.value = '';
+              fileNameDisplay.textContent = 'No file chosen';
+              return;
+            }
+            
             fileNameDisplay.textContent = this.files[0].name;
           } else {
             fileNameDisplay.textContent = 'No file chosen';
@@ -847,26 +1195,76 @@
       // Form submission
       const form = document.getElementById('applicationFormElement');
       if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function(e) {
           e.preventDefault();
           
-          // Get form values
-          const firstName = document.getElementById('firstName').value;
-          const lastName = document.getElementById('lastName').value;
-          const email = document.getElementById('email').value;
-          const country = document.getElementById('country').value;
-          const course = document.getElementById('courseTitle').textContent.replace('Apply for ', '');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Submitting...';
           
-          // Here you would typically send the form data to a server
-          // For demonstration, we'll just show an alert
-          alert(`Application submitted successfully!\n\nCourse: ${course}\nName: ${firstName} ${lastName}\nEmail: ${email}\nCountry: ${country}`);
-          
-          // Reset form
-          form.reset();
-          fileNameDisplay.textContent = 'No file chosen';
-          
-          // Hide form
-          hideForm();
+          try {
+            // Get form values
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const country = document.getElementById('country').value.trim();
+            const average = document.getElementById('average').value;
+            const file = document.getElementById('academicTranscript').files[0];
+            const course = document.getElementById('courseTitle').textContent.replace('Apply for ', '');
+            
+            // Determine qualification type
+            let qualificationType = course.includes('Python Programming') ? 
+              'Introduction to Python Programming and Algorithms' : 
+              'Artificial Intelligence Applications in Africa';
+
+            // Check for existing application
+            const q = query(collection(db, "bootcamp_applications"), where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+            
+            if (!querySnapshot.empty) {
+              const existingApp = querySnapshot.docs[0].data();
+              warningMessage.textContent = `You have already applied for: ${existingApp.qualificationType}.`;
+              showPopup(warningPopup);
+              return;
+            }
+
+            // Process file upload as Base64
+            let transcriptBase64 = '';
+            if (file) {
+              try {
+                transcriptBase64 = await fileToBase64(file);
+              } catch (fileError) {
+                console.error("File conversion error:", fileError);
+                alert("File processing failed but we'll submit your application without it.");
+              }
+            }
+
+            // Add new application to Firestore
+            await addDoc(collection(db, "bootcamp_applications"), {
+              firstName,
+              lastName,
+              email,
+              country,
+              average,
+              course,
+              qualificationType,
+              transcriptBase64: transcriptBase64 || 'No transcript uploaded',
+              timestamp: new Date(),
+              uploadMethod: 'base64'
+            });
+
+            // Show success
+            successMessage.textContent = `Congratulations! You have successfully applied for ${qualificationType}.`;
+            showPopup(successPopup);
+            form.reset();
+            if (fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
+            
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'APPLY NOW';
+          }
         });
       }
     });

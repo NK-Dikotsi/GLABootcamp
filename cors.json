@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["*"],
+    "method": ["PUT", "POST", "GET", "DELETE", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600
+  }
+]
