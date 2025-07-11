@@ -757,9 +757,9 @@
   }
 }
 .testimonials-section {
-    padding: 4rem 0;
-    background-color: #f8f9fa;
-  }
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
   
   .testimonials-container {
     width: 100%;
@@ -771,7 +771,7 @@
   .testimonials-track {
     display: flex;
     gap: 2rem;
-    animation: scroll 60s linear infinite;
+    animation: scroll 40s linear infinite;
     width: calc(300% + 6rem); /* Adjust based on number of testimonials */
   }
   
@@ -785,6 +785,7 @@
     min-width: 300px;
     transition: transform 0.3s ease;
     border: 1px solid #eaeaea;
+    flex-shrink: 0;
   }
   
   .testimonial-card:hover {
@@ -821,13 +822,27 @@
   
   @media (max-width: 768px) {
     .testimonials-track {
-      animation: scroll 120s linear infinite;
+      animation: scroll 60s linear infinite;
+      gap: 1.5rem; /* Reduced gap for mobile */
+    overflow-x: auto; /* Enable manual scrolling */
+    scroll-snap-type: x mandatory; /* Enable snap scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
     
     .testimonial-card {
       min-width: 250px;
+      scroll-snap-align: start;
     }
   }
+
+  @keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 2rem));
+  }
+}
 
 </style>
 </head>
@@ -1206,17 +1221,82 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const track = document.querySelector('.testimonials-track');
-    if (track) {
-      track.addEventListener('mouseenter', function() {
-        this.style.animationPlayState = 'paused';
-      });
-      
-      track.addEventListener('mouseleave', function() {
-        this.style.animationPlayState = 'running';
-      });
-    }
+  const track = document.querySelector('.testimonials-track');
+  if (!track) return;
+
+  let isDragging = false;
+  let startX;
+  let scrollLeft;
+  let animationId;
+  let isPaused = false;
+
+  // Pause animation on interaction
+  function pauseAnimation() {
+    if (isPaused) return;
+    track.style.animationPlayState = 'paused';
+    isPaused = true;
+  }
+
+  // Resume animation after delay
+  function resumeAnimation() {
+    if (!isPaused) return;
+    setTimeout(() => {
+      track.style.animationPlayState = 'running';
+      isPaused = false;
+    }, 3000); // Resume after 3 seconds of inactivity
+  }
+
+  // Mouse/touch events for desktop and mobile
+  track.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    pauseAnimation();
+    track.style.cursor = 'grabbing';
   });
+
+  track.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    pauseAnimation();
+    track.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.cursor = 'grab';
+    resumeAnimation();
+  });
+
+  document.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.cursor = 'grab';
+    resumeAnimation();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  track.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - track.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  // Pause on hover for desktop
+  track.addEventListener('mouseenter', pauseAnimation);
+  track.addEventListener('mouseleave', resumeAnimation);
+});
 
 
   // Animate elements on scroll
