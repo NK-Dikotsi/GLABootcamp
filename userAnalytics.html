@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Analytics Dashboard</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="userProfile.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .analytics-container {
+      max-width: 1200px;
+      margin: 120px auto 40px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      padding: 2rem 2rem 3rem 2rem;
+    }
+    .analytics-title {
+      color: darkgoldenrod;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .tab-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      background: #f8f6f0;
+      border: 2px solid #b8860b;
+      color: #b8860b;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 6px 6px 0 0;
+      padding: 0.7rem 2.2rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      outline: none;
+    }
+    .tab-btn.active, .tab-btn:focus {
+      background: darkgoldenrod;
+      color: #fff;
+      border-bottom: 2px solid #fff;
+      z-index: 2;
+    }
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: #f8f6f0;
+      border-radius: 8px;
+      padding: 1.5rem 2.5rem;
+      min-width: 180px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #b8860b;
+    }
+    .stat-label {
+      font-size: 1.1rem;
+      color: #333;
+      margin-top: 0.5rem;
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .chart-card {
+      background: #f8f6f0;
+      border-radius: 8px;
+      padding: 1.5rem 1rem 1rem 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #b8860b;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .analytics-container { padding: 1rem 0.2rem; }
+      .stat-card { min-width: 120px; padding: 1rem; }
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #111;
+      color: #000;
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-links h4,
+    .footer-contact h4 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .footer-links ul li a:hover {
+      color: darkgoldenrod;
+    }
+
+    .footer-contact p {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo-container">
+        <img src="assets/images/logo.png" alt="GRITLab Logo" class="logo-img" style="max-height: 50px;">
+        <span class="app-name">GRITLab Africa Bootcamp</span>
+      </div>
+      <button type="button" class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="#About">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="Apply.html" class="cta-btn">Apply</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.querySelector('.mobile-toggle');
+      const nav = document.querySelector('nav');
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          nav.classList.toggle('active');
+          const icon = this.querySelector('i');
+          if (nav.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (!nav.contains(e.target) && e.target !== mobileToggle && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+        document.querySelectorAll('nav a').forEach(link => {
+          link.addEventListener('click', function() {
+            if (nav.classList.contains('active')) {
+              nav.classList.remove('active');
+              const icon = mobileToggle.querySelector('i');
+              icon.classList.remove('fa-times');
+              icon.classList.add('fa-bars');
+            }
+          });
+        });
+      }
+    });
+  </script>
+  <div class="analytics-container">
+    <div class="analytics-title">User Analytics Dashboard</div>
+    <div class="tab-row">
+      <button class="tab-btn" id="tabAI">Artificial Intelligence Applications in Africa</button>
+      <button class="tab-btn active" id="tabPython">Introduction to Python Programming and Algorithms</button>
+    </div>
+    <div class="stats-row" id="statsRow">
+     
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Country Distribution</div>
+        <canvas id="countryChart" height="220"></canvas>
+      </div>
+    </div>
+    <div id="loading" class="loading" style="margin-top:2.5rem;">Loading analytics...</div>
+  </div>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <img src="assets/images/logo.png" alt="GRITLab Logo" class="logo-img" style="max-height: 50px;">
+        <div class="footer-links">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="Apply.html">Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p>Email: jbs.innovation@uj.ac.za</p>
+          <p>Phone: +27 63 155 2047</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 2025 GritLab Africa Bootcamp . All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVrk2_Uaao4IadkqdW_ZHAcqhKaHgfA7A",
+      authDomain: "glabootcamp.firebaseapp.com",
+      projectId: "glabootcamp",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let allUsers = [];
+    let currentCourse = "Introduction to Python Programming and Algorithms";
+    let chartInstances = {};
+
+    const COURSE_AI = "Artificial Intelligence Applications in Africa";
+    const COURSE_PYTHON = "Introduction to Python Programming and Algorithms";
+
+    function getFirstLetter(str) {
+      return str && str.length ? str[0].toUpperCase() : '';
+    }
+
+    async function fetchApplications() {
+      const loading = document.getElementById('loading');
+      try {
+        const appsCol = collection(db, "bootcamp_applications");
+        const snapshot = await getDocs(appsCol);
+        allUsers = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          allUsers.push({
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            email: data.email || '',
+            country: data.country || '',
+            course: data.course || '',
+            qualificationType: data.qualificationType || '',
+            average: parseFloat(data.average) || 0,
+            createdAt: data.createdAt || data.timestamp || ''
+          });
+        });
+        loading.style.display = 'none';
+        renderAnalyticsForCourse(currentCourse);
+      } catch (err) {
+        loading.textContent = 'Failed to load analytics.';
+      }
+    }
+
+    function clearCharts() {
+      for (const key in chartInstances) {
+        if (chartInstances[key]) {
+          chartInstances[key].destroy();
+        }
+      }
+      chartInstances = {};
+    }
+
+    function renderAnalyticsForCourse(courseName) {
+      clearCharts();
+      const users = allUsers.filter(u => u.course === courseName);
+      const statsRow = document.getElementById('statsRow');
+      if (!users.length) {
+        statsRow.innerHTML = `<div class='stat-card'><div class='stat-value'>0</div><div class='stat-label'>No data for this course</div></div>`;
+        [
+          'countryChart'
+        ].forEach(id => {
+          const ctx = document.getElementById(id).getContext('2d');
+          ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+        });
+        return;
+      }
+      // --- Stats ---
+      const totalUsers = users.length;
+      const mostCommon = arr => {
+        const freq = {};
+        arr.forEach(x => { if (x) freq[x] = (freq[x]||0)+1; });
+        let max = 0, val = '';
+        for (const k in freq) if (freq[k] > max) { max = freq[k]; val = k; }
+        return val;
+      };
+      const mostCountry = mostCommon(users.map(u=>u.country));
+      const mostCourse = mostCommon(users.map(u=>u.course));
+      statsRow.innerHTML = `
+        <div class="stat-card"><div class="stat-value">${totalUsers}</div><div class="stat-label">Total Students</div></div>
+        <div class="stat-card"><div class="stat-value">${mostCountry||'-'}</div><div class="stat-label">Most Common Country</div></div>
+      `;
+
+      const countryCounts = {};
+      users.forEach(u => { if (u.country) countryCounts[u.country] = (countryCounts[u.country]||0)+1; });
+      chartInstances['countryChart'] = renderPieChart('countryChart', Object.keys(countryCounts), Object.values(countryCounts));
+    }
+
+    function renderPieChart(canvasId, labels, data) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      return new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              'rgba(218,165,32,0.7)',
+              'rgba(184,134,11,0.7)',
+              'rgba(255,215,0,0.7)',
+              'rgba(255,235,59,0.7)',
+              'rgba(255,193,7,0.7)',
+              'rgba(255,152,0,0.7)',
+              'rgba(255,87,34,0.7)'
+            ],
+            borderColor: '#fff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    }
+
+    document.getElementById('tabPython').addEventListener('click', function() {
+      currentCourse = COURSE_PYTHON;
+      document.getElementById('tabPython').classList.add('active');
+      document.getElementById('tabAI').classList.remove('active');
+      renderAnalyticsForCourse(currentCourse);
+    });
+    document.getElementById('tabAI').addEventListener('click', function() {
+      currentCourse = COURSE_AI;
+      document.getElementById('tabAI').classList.add('active');
+      document.getElementById('tabPython').classList.remove('active');
+      renderAnalyticsForCourse(currentCourse);
+    });
+
+    fetchApplications();
+  </script>
+</body>
+</html> 

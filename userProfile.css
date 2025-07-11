@@ -1,0 +1,359 @@
+/* =========================
+   Global Resets & Layout
+   ========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #000;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================
+   Header & Navigation
+   ========================= */
+header {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px 0;
+    z-index: 1000;
+    background-color: #fff;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
+.app-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: darkgoldenrod;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    color: #000;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+nav ul li a.active {
+    color: darkgoldenrod;
+}
+
+nav ul li a:hover {
+    color: darkgoldenrod;
+}
+
+.cta-btn {
+    background-color: darkgoldenrod;
+    color: #000 !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cta-btn:hover {
+    background-color: #b8860b;
+}
+
+.mobile-toggle {
+    background: transparent;
+    border: none;
+    color: #000 !important;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* =========================
+   Intro Overlay
+   ========================= */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    flex-direction: column;
+}
+
+.intro-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-text {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* =========================
+   User Dashboard Components
+   ========================= */
+.user-dashboard {
+    padding: 120px 0 60px;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.user-dashboard-heading {
+    color: darkgoldenrod;
+    margin: 2.5rem 0 1.5rem 0;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.user-dashboard-progress {
+    margin-bottom: 2.5rem;
+}
+
+.user-dashboard-progress-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.user-dashboard-progress-bar-bg {
+    background: #eee;
+    border-radius: 6px;
+    height: 18px;
+    overflow: hidden;
+}
+
+.user-dashboard-progress-bar-fill {
+    background: linear-gradient(90deg, darkgoldenrod 70%, #f1c40f 100%);
+    height: 100%;
+    width: 0%;
+    border-radius: 6px;
+}
+
+.user-dashboard-milestones {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+}
+
+.user-dashboard-milestone-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.user-dashboard-milestone-icon {
+    color: darkgoldenrod;
+    margin-right: 10px;
+    min-width: 22px;
+    text-align: center;
+}
+
+.user-dashboard-milestone-icon.done {
+    color: darkgoldenrod;
+}
+
+.user-dashboard-milestone-icon.current {
+    color: darkgoldenrod;
+}
+
+.user-dashboard-milestone-status {
+    margin-left: 10px;
+    color: #888;
+    font-size: 0.95em;
+}
+
+.user-dashboard-section-title {
+    color: #b8860b;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.user-dashboard-badges {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.user-dashboard-badge {
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+    font-size: 1rem;
+}
+
+.user-dashboard-events {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+}
+
+.user-dashboard-events li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.user-dashboard-event-icon {
+    color: #b8860b;
+    margin-right: 10px;
+    min-width: 22px;
+    text-align: center;
+}
+
+.user-dashboard-event-status {
+    margin-left: auto;
+    color: #888;
+    font-size: 0.95em;
+}
+
+.user-dashboard-reflection {
+    color: #333;
+    font-size: 1rem;
+}
+
+/* =========================
+   Responsive Media Queries
+   ========================= */
+@media (max-width: 768px) {
+    header {
+        position: relative;
+        background-color: #fff;
+        padding: 15px 0;
+    }
+    .logo-img {
+        height: 40px;
+    }
+    .app-name {
+        font-size: 1rem;
+    }
+    nav {
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: -250px;
+        width: 250px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 80px 30px 30px;
+        transition: transform 0.3s ease;
+    }
+    .mobile-toggle {
+        display: block;
+    }
+    nav.active {
+        transform: translateX(-100%);
+    }
+    nav ul {
+        flex-direction: column;
+        gap: 20px;
+    }
+    nav ul li {
+        margin: 15px 0;
+    }
+    nav ul li a {
+        font-size: 16px;
+    }
+    .intro-text {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-dashboard-heading {
+        font-size: 1.1rem;
+    }
+    .user-dashboard-badges {
+        flex-direction: column;
+        gap: 10px;
+    }
+} 
