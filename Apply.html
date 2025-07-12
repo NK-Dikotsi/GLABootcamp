@@ -1242,7 +1242,7 @@
             // Determine qualification type
             let qualificationType = course.includes('Python Programming') ? 
               'Introduction to Python Programming and Algorithms' : 
-              'Artificial Intelligence Applications in Africa';
+              'Artificial Intelligence and Practical Applications in Africa';
 
             // Check for existing application
             const q = query(collection(db, "bootcamp_applications"), where("email", "==", email));
