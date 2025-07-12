@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login | GRITLab Africa Bootcamp</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #000;
+      background-color: #f8f9fa;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* Header Styles */
+    header {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 20px 0;
+      z-index: 1000;
+      background-color: #fff;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 2;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: auto;
+    }
+
+    .app-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: black;
+      text-decoration: underline;
+      text-decoration-color: darkgoldenrod;
+      text-underline-offset: 5px;
+      text-decoration-thickness: 2px;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li {
+      margin-left: 25px;
+    }
+
+    nav ul li a {
+      color: #000;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    nav ul li a.active {
+      color: darkgoldenrod;
+    }
+
+    nav ul li a:hover {
+      color: darkgoldenrod;
+    }
+
+    .cta-btn {
+      background-color: darkgoldenrod;
+      color: #000 !important;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background-color: #b8860b;
+    }
+
+    .mobile-toggle {
+      background: transparent;
+      border: none;
+      color: #000 !important;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1001;
+      display: none;
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Login Section */
+    .login-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 40px 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 3rem;
+      max-width: 450px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, darkgoldenrod, #b8860b);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1rem;
+      display: block;
+    }
+
+    .login-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-subtitle {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      background: #fafbfc;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: darkgoldenrod;
+      box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.1);
+      background: white;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .input-with-icon {
+      padding-left: 45px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    .password-toggle:hover {
+      color: darkgoldenrod;
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: darkgoldenrod;
+    }
+
+    .forgot-password {
+      color: darkgoldenrod;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .forgot-password:hover {
+      color: #b8860b;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, darkgoldenrod, #b8860b);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      position: relative;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e1e5e9;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 1rem;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e1e5e9;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.3s, background-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .social-btn:hover {
+      border-color: darkgoldenrod;
+      background-color: #fafbfc;
+    }
+
+    .social-btn i {
+      font-size: 1.1rem;
+    }
+
+    .signup-link {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .signup-link a {
+      color: darkgoldenrod;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .signup-link a:hover {
+      color: #b8860b;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      border-left: 4px solid #c33;
+      display: none;
+    }
+
+    .success-message {
+      background: #efe;
+      color: #363;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      border-left: 4px solid #363;
+      display: none;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #111;
+      color: #000;
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-links h4,
+    .footer-contact h4,
+    .footer-social h4 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+      color: #ffffff;
+      transition: color 0.3s;
+    }
+
+    .footer-links ul li a:hover {
+      color: darkgoldenrod;
+    }
+
+    .footer-contact p {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      color: #ffffff;
+      background-color: #333;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+
+    .social-icons a:hover {
+      background-color: darkgoldenrod;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .login-container {
+        padding: 2rem;
+        margin: 0 1rem;
+      }
+
+      .login-title {
+        font-size: 1.5rem;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+
+      .form-options {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem;
+      }
+
+      .login-title {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo-container">
+        <img src="assets/images/logo.png" alt="GRITLab Logo" class="logo-img">
+        <span class="app-name">GRITLab Africa Bootcamp</span>
+      </div>
+      <button type="button" class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="Apply.html">Apply</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="login-section">
+    <div class="login-container">
+      <div class="login-header">
+        <img src="assets/images/logo.png" alt="GRITLab Logo" class="login-logo">
+        <h1 class="login-title">Welcome Back</h1>
+        <p class="login-subtitle">Sign in to access your learning dashboard</p>
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorText">Invalid email or password. Please try again.</span>
+      </div>
+
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <span>Login successful! Redirecting...</span>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="email" class="form-input input-with-icon" placeholder="Enter your email" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" id="password" class="form-input input-with-icon" placeholder="Enter your password" required>
+            <button type="button" class="password-toggle" id="passwordToggle">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <div class="checkbox-group">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember me</label>
+          </div>
+          <a href="#" class="forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <i class="fas fa-sign-in-alt"></i>
+          Sign In
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="social-login">
+        <button class="social-btn" onclick="socialLogin('google')">
+          <i class="fab fa-google"></i>
+          Google
+        </button>
+        <button class="social-btn" onclick="socialLogin('facebook')">
+          <i class="fab fa-facebook-f"></i>
+          Facebook
+        </button>
+      </div>
+
+      <div class="signup-link">
+        Don't have an account? <a href="Apply.html">Apply Now</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <img src="assets/images/logo.png" alt="GRITLab Logo" class="logo-img" style="max-height: 50px;">
+        <div class="footer-links">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="Apply.html">Apply</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p>Email: info@gritlab.org</p>
+          <p>Phone: +27 63 155 2047</p>
+        </div>
+        <div class="footer-social">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 2025 GritLab Africa Bootcamp. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sample user data (in a real app, this would come from a database)
+    const sampleUsers = [
+      {
+        email: 'student@gritlab.org',
+        password: 'password123',
+        name: 'John Student',
+        role: 'student'
+      },
+      {
+        email: 'demo@example.com',
+        password: 'demo123',
+        name: 'Demo User',
+        role: 'student'
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const passwordToggle = document.getElementById('passwordToggle');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      // Password toggle functionality
+      passwordToggle.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+      });
+
+      // Form submission
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const rememberMe = document.getElementById('rememberMe').checked;
+
+        // Hide any existing messages
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
+
+        // Simple validation
+        if (!email || !password) {
+          showError('Please fill in all fields.');
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          showError('Please enter a valid email address.');
+          return;
+        }
+
+        // Check credentials (in a real app, this would be an API call)
+        const user = authenticateUser(email, password);
+        
+        if (user) {
+          // Store user data in localStorage (in a real app, use secure tokens)
+          if (rememberMe) {
+            localStorage.setItem('user', JSON.stringify(user));
+          } else {
+            sessionStorage.setItem('user', JSON.stringify(user));
+          }
+          
+          showSuccess();
+          
+          // Redirect to user profile after a short delay
+          setTimeout(() => {
+            window.location.href = 'userProfile.html';
+          }, 1500);
+        } else {
+          showError('Invalid email or password. Please try again.');
+        }
+      });
+
+      // Mobile menu toggle
+      const mobileToggle = document.querySelector('.mobile-toggle');
+      const nav = document.querySelector('nav');
+      
+      if (mobileToggle) {
+        mobileToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          nav.classList.toggle('active');
+          const icon = this.querySelector('i');
+          if (nav.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+          } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!nav.contains(e.target) && e.target !== mobileToggle && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+      }
+    });
+
+    function authenticateUser(email, password) {
+      return sampleUsers.find(user => 
+        user.email.toLowerCase() === email.toLowerCase() && 
+        user.password === password
+      );
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function showError(message) {
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      errorText.textContent = message;
+      errorMessage.style.display = 'block';
+    }
+
+    function showSuccess() {
+      const successMessage = document.getElementById('successMessage');
+      successMessage.style.display = 'block';
+    }
+
+    function socialLogin(provider) {
+      // In a real app, this would integrate with OAuth providers
+      alert(`${provider} login functionality would be implemented here.`);
+    }
+  </script>
+</body>
+</html> 

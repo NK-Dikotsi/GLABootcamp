@@ -187,6 +187,40 @@ footer {
   </footer>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in
+      const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || 'null');
+      
+      if (!user) {
+        // Redirect to login if not authenticated
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Populate user data
+      const userName = document.querySelector('.user-name');
+      const userDetails = document.querySelectorAll('.user-detail');
+      
+      if (userName) {
+        userName.textContent = `Welcome, ${user.name}`;
+      }
+      
+      if (userDetails.length >= 2) {
+        userDetails[0].textContent = `Email: ${user.email}`;
+        userDetails[1].textContent = `Role: ${user.role}`;
+      }
+
+      // Add logout functionality
+      const logoutBtn = document.createElement('li');
+      logoutBtn.innerHTML = '<a href="#" id="logoutBtn" class="cta-btn">Logout</a>';
+      document.querySelector('nav ul').appendChild(logoutBtn);
+
+      document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
+        window.location.href = 'login.html';
+      });
+
       const introOverlay = document.querySelector('.intro-overlay');
       if (introOverlay) {
         setTimeout(() => {
