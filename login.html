@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       margin: 0;
@@ -607,21 +608,12 @@
   </footer>
 
   <script>
-    // Sample user data (in a real app, this would come from a database)
-    const sampleUsers = [
-      {
-        glCode: 'GL001',
-        password: 'password123',
-        name: 'John Student',
-        role: 'student'
-      },
-      {
-        glCode: 'GL002',
-        password: 'demo123',
-        name: 'Demo User',
-        role: 'student'
-      }
-    ];
+    // Supabase configuration
+    const SUPABASE_URL = 'https://oyfwswrblulmntxtodjh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Zndzd3JibHVsbW50eHRvZGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjg1NDgsImV4cCI6MjA2NzkwNDU0OH0.5yL99HsJoNYfRrDHtPEneoOrTItlKkSApcCbHAL3yWg'; // Replace with your Supabase anon key
+
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.addEventListener('DOMContentLoaded', function() {
       const loginForm = document.getElementById('loginForm');
@@ -664,26 +656,8 @@
           return;
         }
 
-        // Check credentials (in a real app, this would be an API call)
-        const user = authenticateUser(glCode, password);
-        
-        if (user) {
-          // Store user data in localStorage (in a real app, use secure tokens)
-          if (rememberMe) {
-            localStorage.setItem('user', JSON.stringify(user));
-          } else {
-            sessionStorage.setItem('user', JSON.stringify(user));
-          }
-          
-          showSuccess();
-          
-          // Redirect to user profile after a short delay
-          setTimeout(() => {
-            window.location.href = 'userProfile.html';
-          }, 1500);
-        } else {
-          showError('Invalid email or password. Please try again.');
-        }
+        // Authenticate with Supabase
+        authenticateUser(glCode, password, rememberMe);
       });
 
       // Mobile menu toggle
@@ -715,11 +689,56 @@
       }
     });
 
-    function authenticateUser(glCode, password) {
-      return sampleUsers.find(user => 
-        user.glCode.toUpperCase() === glCode.toUpperCase() && 
-        user.password === password
-      );
+    async function authenticateUser(glCode, password, rememberMe) {
+      try {
+        // Query the users table to find the user with the given GL code
+        const { data: users, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('gl_code', glCode.toUpperCase())
+          .single();
+
+        if (error) {
+          console.error('Error fetching user:', error);
+          showError('Authentication failed. Please try again.');
+          return;
+        }
+
+        if (!users) {
+          showError('Invalid GL code. Please check and try again.');
+          return;
+        }
+
+        // In a real implementation, you would hash the password and compare
+        // For now, we'll assume the password is stored as plain text (not recommended for production)
+        if (users.password === password) {
+          // Store user data
+          const userData = {
+            glCode: users.gl_code,
+            name: `${users.first_name} ${users.last_name}`,
+            course: users.course || 'Not Assigned',
+            email: users.email
+          };
+
+          if (rememberMe) {
+            localStorage.setItem('user', JSON.stringify(userData));
+          } else {
+            sessionStorage.setItem('user', JSON.stringify(userData));
+          }
+          
+          showSuccess();
+          
+          // Redirect to dashboard after a short delay
+          setTimeout(() => {
+            window.location.href = 'userProfile.html';
+          }, 1500);
+        } else {
+          showError('Invalid password. Please try again.');
+        }
+      } catch (error) {
+        console.error('Authentication error:', error);
+        showError('Authentication failed. Please try again.');
+      }
     }
 
     function isValidGLCode(glCode) {
