@@ -465,7 +465,14 @@ footer {
         courseCounts[app.course] = (courseCounts[app.course] || 0) + 1;
       });
 
-      chartInstances['courseChart'] = renderPieChart('courseChart', Object.keys(courseCounts), Object.values(courseCounts));
+      // Convert counts to percentages
+      const total = allApplications.length;
+      const coursePercentages = {};
+      Object.keys(courseCounts).forEach(course => {
+        coursePercentages[course] = ((courseCounts[course] / total) * 100).toFixed(1);
+      });
+
+      chartInstances['courseChart'] = renderPieChart('courseChart', Object.keys(coursePercentages), Object.values(coursePercentages));
     }
 
     function renderGenderChart() {
@@ -474,7 +481,14 @@ footer {
         genderCounts[app.gender] = (genderCounts[app.gender] || 0) + 1;
       });
 
-      chartInstances['genderChart'] = renderPieChart('genderChart', Object.keys(genderCounts), Object.values(genderCounts));
+      // Convert counts to percentages
+      const total = filteredApplications.length;
+      const genderPercentages = {};
+      Object.keys(genderCounts).forEach(gender => {
+        genderPercentages[gender] = ((genderCounts[gender] / total) * 100).toFixed(1);
+      });
+
+      chartInstances['genderChart'] = renderPieChart('genderChart', Object.keys(genderPercentages), Object.values(genderPercentages));
     }
 
     function renderCountryChart() {
@@ -483,7 +497,14 @@ footer {
         countryCounts[app.country] = (countryCounts[app.country] || 0) + 1;
       });
 
-      chartInstances['countryChart'] = renderPieChart('countryChart', Object.keys(countryCounts), Object.values(countryCounts));
+      // Convert counts to percentages
+      const total = filteredApplications.length;
+      const countryPercentages = {};
+      Object.keys(countryCounts).forEach(country => {
+        countryPercentages[country] = ((countryCounts[country] / total) * 100).toFixed(1);
+      });
+
+      chartInstances['countryChart'] = renderPieChart('countryChart', Object.keys(countryPercentages), Object.values(countryPercentages));
     }
 
     function renderFacultyChart() {
@@ -492,7 +513,14 @@ footer {
         facultyCounts[app.faculty] = (facultyCounts[app.faculty] || 0) + 1;
       });
 
-      chartInstances['facultyChart'] = renderPieChart('facultyChart', Object.keys(facultyCounts), Object.values(facultyCounts));
+      // Convert counts to percentages
+      const total = filteredApplications.length;
+      const facultyPercentages = {};
+      Object.keys(facultyCounts).forEach(faculty => {
+        facultyPercentages[faculty] = ((facultyCounts[faculty] / total) * 100).toFixed(1);
+      });
+
+      chartInstances['facultyChart'] = renderPieChart('facultyChart', Object.keys(facultyPercentages), Object.values(facultyPercentages));
     }
 
     function renderAgeChart() {
@@ -570,7 +598,14 @@ footer {
         africoinCounts[app.africoin_spending] = (africoinCounts[app.africoin_spending] || 0) + 1;
       });
 
-      chartInstances['africoinChart'] = renderPieChart('africoinChart', Object.keys(africoinCounts), Object.values(africoinCounts));
+      // Convert counts to percentages
+      const total = filteredApplications.length;
+      const africoinPercentages = {};
+      Object.keys(africoinCounts).forEach(spending => {
+        africoinPercentages[spending] = ((africoinCounts[spending] / total) * 100).toFixed(1);
+      });
+
+      chartInstances['africoinChart'] = renderPieChart('africoinChart', Object.keys(africoinPercentages), Object.values(africoinPercentages));
     }
 
     function renderPieChart(canvasId, labels, data) {
@@ -578,7 +613,7 @@ footer {
       return new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: labels,
+          labels: labels.map((label, index) => `${label} (${data[index]}%)`),
           datasets: [{
             data: data,
             backgroundColor: chartColors.slice(0, labels.length),
@@ -595,7 +630,19 @@ footer {
                 padding: 10,
                 usePointStyle: true
               }
-            } 
+            },
+            tooltip: {
+              callbacks: {
+                title: function(context) {
+                  // Extract just the original label name without the percentage
+                  const fullLabel = context[0].label;
+                  return fullLabel.split(' (')[0]; // Remove the percentage part
+                },
+                label: function(context) {
+                  return context.parsed + '%';
+                }
+              }
+            }
           }
         }
       });
