@@ -24,6 +24,37 @@
       font-size: 2rem;
       font-weight: 700;
     }
+    
+    .filter-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .filter-btn {
+      background: #f8f6f0;
+      border: 2px solid #b8860b;
+      color: #b8860b;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 25px;
+      padding: 0.7rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    .filter-btn:hover {
+      background: #e6d7b8;
+      transform: translateY(-2px);
+    }
+    
+    .filter-btn.active {
+      background: darkgoldenrod;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+    }
     .tab-row {
       display: flex;
       justify-content: center;
@@ -75,8 +106,8 @@
     }
     .charts-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
       margin-top: 2rem;
     }
     .chart-card {
@@ -236,19 +267,54 @@ footer {
       }
     });
   </script>
-  <div class="analytics-container">
-    <div class="analytics-title">User Analytics Dashboard</div>
-    <div class="tab-row">
-      <button class="tab-btn" id="tabAI">Artificial Intelligence Applications in Africa</button>
-      <button class="tab-btn active" id="tabPython">Introduction to Python Programming and Algorithms</button>
-    </div>
-    <div class="stats-row" id="statsRow">
-     
-    </div>
+      <div class="analytics-container">
+      <div class="analytics-title">User Analytics Dashboard</div>
+      
+      <div class="filter-row">
+        <button class="filter-btn active" id="filterAll">All Courses</button>
+        <button class="filter-btn" id="filterPython">Python Programming</button>
+        <button class="filter-btn" id="filterAI">Artificial Intelligence</button>
+      </div>
+
+      <div class="stats-row" id="statsRow">
+      
+      </div>
     <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Course Distribution</div>
+        <canvas id="courseChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Gender Distribution</div>
+        <canvas id="genderChart" height="220"></canvas>
+      </div>
       <div class="chart-card">
         <div class="chart-title">Country Distribution</div>
         <canvas id="countryChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Faculty Distribution</div>
+        <canvas id="facultyChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Age Distribution</div>
+        <canvas id="ageChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Year of Study</div>
+        <canvas id="yearChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Mark Average Distribution</div>
+        <canvas id="markChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Weekly Hours Commitment</div>
+        <canvas id="hoursChart" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Africoin Spending Patterns</div>
+        <canvas id="africoinChart" height="220"></canvas>
       </div>
     </div>
     <div id="loading" class="loading" style="margin-top:2.5rem;">Loading analytics...</div>
@@ -285,52 +351,49 @@ footer {
       </div>
     </div>
   </footer>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Supabase configuration
+    const SUPABASE_URL = 'https://oyfwswrblulmntxtodjh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Zndzd3JibHVsbW50eHRvZGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjg1NDgsImV4cCI6MjA2NzkwNDU0OH0.5yL99HsJoNYfRrDHtPEneoOrTItlKkSApcCbHAL3yWg';
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBVrk2_Uaao4IadkqdW_ZHAcqhKaHgfA7A",
-      authDomain: "glabootcamp.firebaseapp.com",
-      projectId: "glabootcamp",
-    };
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let allUsers = [];
-    let currentCourse = "Introduction to Python Programming and Algorithms";
+    let allApplications = [];
+    let filteredApplications = [];
+    let currentFilter = 'all';
     let chartInstances = {};
 
-    const COURSE_AI = "Artificial Intelligence Applications in Africa";
-    const COURSE_PYTHON = "Introduction to Python Programming and Algorithms";
-
-    function getFirstLetter(str) {
-      return str && str.length ? str[0].toUpperCase() : '';
-    }
+    // Color palette for charts
+    const chartColors = [
+      'rgba(218,165,32,0.8)',   // Goldenrod
+      'rgba(184,134,11,0.8)',   // DarkGoldenrod
+      'rgba(255,215,0,0.8)',    // Gold
+      'rgba(255,235,59,0.8)',   // Yellow
+      'rgba(255,193,7,0.8)',    // Amber
+      'rgba(255,152,0,0.8)',    // Orange
+      'rgba(255,87,34,0.8)',    // Deep Orange
+      'rgba(244,67,54,0.8)',    // Red
+      'rgba(233,30,99,0.8)',    // Pink
+      'rgba(156,39,176,0.8)'    // Purple
+    ];
 
     async function fetchApplications() {
       const loading = document.getElementById('loading');
       try {
-        const appsCol = collection(db, "bootcamp_applications");
-        const snapshot = await getDocs(appsCol);
-        allUsers = [];
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          allUsers.push({
-            firstName: data.firstName || '',
-            lastName: data.lastName || '',
-            email: data.email || '',
-            country: data.country || '',
-            course: data.course || '',
-            qualificationType: data.qualificationType || '',
-            average: parseFloat(data.average) || 0,
-            createdAt: data.createdAt || data.timestamp || ''
-          });
-        });
+        const { data, error } = await supabase
+          .from('bootcamp_applications')
+          .select('*');
+        
+        if (error) throw error;
+        
+        allApplications = data || [];
+        filteredApplications = [...allApplications];
         loading.style.display = 'none';
-        renderAnalyticsForCourse(currentCourse);
+        renderAllAnalytics();
       } catch (err) {
+        console.error('Error fetching applications:', err);
         loading.textContent = 'Failed to load analytics.';
       }
     }
@@ -344,39 +407,170 @@ footer {
       chartInstances = {};
     }
 
-    function renderAnalyticsForCourse(courseName) {
+    function renderAllAnalytics() {
       clearCharts();
-      const users = allUsers.filter(u => u.course === courseName);
-      const statsRow = document.getElementById('statsRow');
-      if (!users.length) {
-        statsRow.innerHTML = `<div class='stat-card'><div class='stat-value'>0</div><div class='stat-label'>No data for this course</div></div>`;
-        [
-          'countryChart'
-        ].forEach(id => {
-          const ctx = document.getElementById(id).getContext('2d');
-          ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-        });
+      
+      if (!filteredApplications.length) {
+        document.getElementById('statsRow').innerHTML = 
+          '<div class="stat-card"><div class="stat-value">0</div><div class="stat-label">No applications found</div></div>';
         return;
       }
-      // --- Stats ---
-      const totalUsers = users.length;
-      const mostCommon = arr => {
-        const freq = {};
-        arr.forEach(x => { if (x) freq[x] = (freq[x]||0)+1; });
-        let max = 0, val = '';
-        for (const k in freq) if (freq[k] > max) { max = freq[k]; val = k; }
-        return val;
-      };
-      const mostCountry = mostCommon(users.map(u=>u.country));
-      const mostCourse = mostCommon(users.map(u=>u.course));
-      statsRow.innerHTML = `
-        <div class="stat-card"><div class="stat-value">${totalUsers}</div><div class="stat-label">Total Students</div></div>
-        <div class="stat-card"><div class="stat-value">${mostCountry||'-'}</div><div class="stat-label">Most Common Country</div></div>
-      `;
 
+      // Render statistics
+      renderStatistics();
+      
+      // Render all charts
+      renderCourseChart();
+      renderGenderChart();
+      renderCountryChart();
+      renderFacultyChart();
+      renderAgeChart();
+      renderYearChart();
+      renderMarkChart();
+      renderHoursChart();
+      renderAfricoinChart();
+    }
+
+    function renderStatistics() {
+      const stats = {
+        total: filteredApplications.length,
+        avgAge: Math.round(filteredApplications.reduce((sum, app) => sum + app.age, 0) / filteredApplications.length),
+        avgMark: Math.round(filteredApplications.reduce((sum, app) => sum + parseFloat(app.mark_average), 0) / filteredApplications.length * 100) / 100,
+        avgHours: Math.round(filteredApplications.reduce((sum, app) => sum + app.weekly_hours, 0) / filteredApplications.length)
+      };
+
+      document.getElementById('statsRow').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-value">${stats.total}</div>
+          <div class="stat-label">Total Applications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${stats.avgAge}</div>
+          <div class="stat-label">Average Age</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${stats.avgMark}%</div>
+          <div class="stat-label">Average Mark</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">${stats.avgHours}h</div>
+          <div class="stat-label">Avg Weekly Hours</div>
+        </div>
+      `;
+    }
+
+    function renderCourseChart() {
+      const courseCounts = {};
+      allApplications.forEach(app => {
+        courseCounts[app.course] = (courseCounts[app.course] || 0) + 1;
+      });
+
+      chartInstances['courseChart'] = renderPieChart('courseChart', Object.keys(courseCounts), Object.values(courseCounts));
+    }
+
+    function renderGenderChart() {
+      const genderCounts = {};
+      filteredApplications.forEach(app => {
+        genderCounts[app.gender] = (genderCounts[app.gender] || 0) + 1;
+      });
+
+      chartInstances['genderChart'] = renderPieChart('genderChart', Object.keys(genderCounts), Object.values(genderCounts));
+    }
+
+    function renderCountryChart() {
       const countryCounts = {};
-      users.forEach(u => { if (u.country) countryCounts[u.country] = (countryCounts[u.country]||0)+1; });
+      filteredApplications.forEach(app => {
+        countryCounts[app.country] = (countryCounts[app.country] || 0) + 1;
+      });
+
       chartInstances['countryChart'] = renderPieChart('countryChart', Object.keys(countryCounts), Object.values(countryCounts));
+    }
+
+    function renderFacultyChart() {
+      const facultyCounts = {};
+      filteredApplications.forEach(app => {
+        facultyCounts[app.faculty] = (facultyCounts[app.faculty] || 0) + 1;
+      });
+
+      chartInstances['facultyChart'] = renderPieChart('facultyChart', Object.keys(facultyCounts), Object.values(facultyCounts));
+    }
+
+    function renderAgeChart() {
+      const ageRanges = {
+        '18-20': 0,
+        '21-23': 0,
+        '24-26': 0,
+        '27-29': 0,
+        '30+': 0
+      };
+
+      filteredApplications.forEach(app => {
+        if (app.age <= 20) ageRanges['18-20']++;
+        else if (app.age <= 23) ageRanges['21-23']++;
+        else if (app.age <= 26) ageRanges['24-26']++;
+        else if (app.age <= 29) ageRanges['27-29']++;
+        else ageRanges['30+']++;
+      });
+
+      chartInstances['ageChart'] = renderBarChart('ageChart', Object.keys(ageRanges), Object.values(ageRanges), 'Age Ranges', 'Number of Students');
+    }
+
+    function renderYearChart() {
+      const yearCounts = {};
+      filteredApplications.forEach(app => {
+        yearCounts[`Year ${app.year_of_study}`] = (yearCounts[`Year ${app.year_of_study}`] || 0) + 1;
+      });
+
+      chartInstances['yearChart'] = renderBarChart('yearChart', Object.keys(yearCounts), Object.values(yearCounts), 'Year of Study', 'Number of Students');
+    }
+
+    function renderMarkChart() {
+      const markRanges = {
+        '60-70%': 0,
+        '71-80%': 0,
+        '81-90%': 0,
+        '91-100%': 0
+      };
+
+      filteredApplications.forEach(app => {
+        const mark = parseFloat(app.mark_average);
+        if (mark >= 60 && mark <= 70) markRanges['60-70%']++;
+        else if (mark >= 71 && mark <= 80) markRanges['71-80%']++;
+        else if (mark >= 81 && mark <= 90) markRanges['81-90%']++;
+        else if (mark >= 91) markRanges['91-100%']++;
+      });
+
+      chartInstances['markChart'] = renderBarChart('markChart', Object.keys(markRanges), Object.values(markRanges), 'Mark Ranges', 'Number of Students');
+    }
+
+    function renderHoursChart() {
+      const hourRanges = {
+        '1-5h': 0,
+        '6-10h': 0,
+        '11-15h': 0,
+        '16-20h': 0,
+        '20h+': 0
+      };
+
+      filteredApplications.forEach(app => {
+        const hours = app.weekly_hours;
+        if (hours <= 5) hourRanges['1-5h']++;
+        else if (hours <= 10) hourRanges['6-10h']++;
+        else if (hours <= 15) hourRanges['11-15h']++;
+        else if (hours <= 20) hourRanges['16-20h']++;
+        else hourRanges['20h+']++;
+      });
+
+      chartInstances['hoursChart'] = renderBarChart('hoursChart', Object.keys(hourRanges), Object.values(hourRanges), 'Weekly Hours', 'Number of Students');
+    }
+
+    function renderAfricoinChart() {
+      const africoinCounts = {};
+      filteredApplications.forEach(app => {
+        africoinCounts[app.africoin_spending] = (africoinCounts[app.africoin_spending] || 0) + 1;
+      });
+
+      chartInstances['africoinChart'] = renderPieChart('africoinChart', Object.keys(africoinCounts), Object.values(africoinCounts));
     }
 
     function renderPieChart(canvasId, labels, data) {
@@ -387,40 +581,114 @@ footer {
           labels: labels,
           datasets: [{
             data: data,
-            backgroundColor: [
-              'rgba(218,165,32,0.7)',
-              'rgba(184,134,11,0.7)',
-              'rgba(255,215,0,0.7)',
-              'rgba(255,235,59,0.7)',
-              'rgba(255,193,7,0.7)',
-              'rgba(255,152,0,0.7)',
-              'rgba(255,87,34,0.7)'
-            ],
+            backgroundColor: chartColors.slice(0, labels.length),
             borderColor: '#fff',
             borderWidth: 2
           }]
         },
         options: {
           responsive: true,
-          plugins: { legend: { position: 'bottom' } }
+          plugins: { 
+            legend: { 
+              position: 'bottom',
+              labels: {
+                padding: 10,
+                usePointStyle: true
+              }
+            } 
+          }
         }
       });
     }
 
-    document.getElementById('tabPython').addEventListener('click', function() {
-      currentCourse = COURSE_PYTHON;
-      document.getElementById('tabPython').classList.add('active');
-      document.getElementById('tabAI').classList.remove('active');
-      renderAnalyticsForCourse(currentCourse);
-    });
-    document.getElementById('tabAI').addEventListener('click', function() {
-      currentCourse = COURSE_AI;
-      document.getElementById('tabAI').classList.add('active');
-      document.getElementById('tabPython').classList.remove('active');
-      renderAnalyticsForCourse(currentCourse);
-    });
+    function renderBarChart(canvasId, labels, data, xAxisLabel, yAxisLabel) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      return new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: yAxisLabel,
+            data: data,
+            backgroundColor: chartColors[0],
+            borderColor: 'rgba(184,134,11,1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: yAxisLabel
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: xAxisLabel
+              }
+            }
+          }
+        }
+      });
+    }
 
-    fetchApplications();
+    // Filter functionality
+    function applyFilter(filterType) {
+      currentFilter = filterType;
+      
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeButton = document.getElementById(`filter${filterType.charAt(0).toUpperCase() + filterType.slice(1)}`);
+      if (activeButton) {
+        activeButton.classList.add('active');
+      }
+      
+      // Filter applications
+      switch(filterType) {
+        case 'all':
+          filteredApplications = [...allApplications];
+          break;
+        case 'python':
+          filteredApplications = allApplications.filter(app => 
+            app.course === 'Introduction to Python Programming and Algorithms'
+          );
+          break;
+        case 'ai':
+          filteredApplications = allApplications.filter(app => 
+            app.course === 'Artificial Intelligence and Practical Applications in Africa'
+          );
+          break;
+        default:
+          filteredApplications = [...allApplications];
+      }
+      
+      // Re-render analytics with filtered data
+      renderAllAnalytics();
+    }
+
+    // Initialize analytics and set up event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up filter button event listeners
+      const filterAll = document.getElementById('filterAll');
+      const filterPython = document.getElementById('filterPython');
+      const filterAI = document.getElementById('filterAI');
+      
+      if (filterAll) filterAll.addEventListener('click', () => applyFilter('all'));
+      if (filterPython) filterPython.addEventListener('click', () => applyFilter('python'));
+      if (filterAI) filterAI.addEventListener('click', () => applyFilter('ai'));
+      
+      // Initialize analytics
+      fetchApplications();
+    });
   </script>
 </body>
 </html> 
