@@ -272,6 +272,31 @@
       line-height: 1.6;
     }
 
+    .course-card {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .apply-now-badge {
+      background: linear-gradient(135deg, darkgoldenrod, #b8860b);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      transition: transform 0.2s ease;
+    }
+
+    .course-card:hover .apply-now-badge {
+      transform: scale(1.05);
+    }
+
     /* Application Form */
     .application-form-container {
       display: none;
@@ -869,25 +894,34 @@
       </div>
       
       <div class="courses-grid">
-        <div class="course-card" data-course="Introduction to Python Programming and Algorithms">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSciUSl3-FM7N_O_YUxw2OoLv9TRUp1vn4hVm774q47xqfzalg/viewform?usp=dialog" target="_blank" class="course-card" data-course="Introduction to Python Programming and Algorithms">
           <div class="course-icon">
             <i class="bi bi-file-earmark-code"></i>
           </div>
           <h3>Introduction to Python Programming and Algorithms</h3>
           <p>Master foundational programming concepts with Python and essential algorithm design for effective problem solving in various domains.</p>
-        </div>
+          <div class="apply-now-badge">
+            <i class="fas fa-external-link-alt"></i>
+            Apply
+          </div>
+        </a>
         
-        <div class="course-card" data-course="Artificial Intelligence Applications in Africa">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScLEQ8Zar4Mky3jjmCpDtJQfAdcKuQtZ_cNTvleRSfCwEwX9g/viewform?usp=dialog" target="_blank" class="course-card" data-course="Artificial Intelligence Applications in Africa">
           <div class="course-icon">
             <i class="bi bi-robot"></i>
           </div>
-          <h3>Artificial Intelligence Applications in Africa</h3>
+          <h3>Artificial Intelligence and Practical Applications in Africa</h3>
           <p>Explore practical applications of artificial intelligence tailored for African contexts, solving real-world challenges.</p>
-        </div>
+          <div class="apply-now-badge">
+            <i class="fas fa-external-link-alt"></i>
+            Apply
+          </div>
+        </a>
       </div>
     </div>
     
-    <!-- Application Form Container -->
+    <!-- Application Form Container - COMMENTED OUT -->
+    <!--
     <div class="application-form-container" id="applicationFormContainer">
       <div class="application-form">
         <div class="form-header">
@@ -930,6 +964,7 @@
         </form>
       </div>
     </div>
+    -->
   </section>
 
   <footer id="contact">
@@ -952,9 +987,9 @@
         <div class="footer-social">
           <h4>Follow Us</h4>
           <div class="social-icons">
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/kingsman_academic_official/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/grit-lab-africa/" aria-label="LinkedIn" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/@GRITLabAfrica" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
       </div>
@@ -1153,13 +1188,15 @@
         hideForm();
       });
 
-      // Initialize click handlers for course cards - direct to form
+      // Initialize click handlers for course cards - COMMENTED OUT (now using direct Google Forms links)
+      /*
       document.querySelectorAll('.course-card').forEach(card => {
         card.addEventListener('click', function() {
           const courseTitle = this.getAttribute('data-course');
           showForm(courseTitle);
         });
       });
+      */
 
       // Back button
       const backButton = document.getElementById('backButton');
