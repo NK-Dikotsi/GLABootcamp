@@ -24,8 +24,8 @@
     }
 
     .container {
-      width: 90%;
-      max-width: 1200px;
+      width: 95%;
+      max-width: 1600px;
       margin: 0 auto;
       padding: 0 15px;
     }
@@ -321,6 +321,64 @@
       margin: 0;
     }
 
+    /* Course Tabs Styles */
+    .course-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border: none;
+      background: #f8f9fa;
+      color: #666;
+      border-radius: 8px 8px 0 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn:hover {
+      background: #e9ecef;
+      color: #333;
+    }
+
+    .tab-btn.active {
+      background: darkgoldenrod;
+      color: #000;
+      border-bottom-color: #000;
+    }
+
+    .tab-btn i {
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .course-tabs {
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .tab-btn {
+        border-radius: 8px;
+        border-bottom: none;
+        border-left: 3px solid transparent;
+      }
+      
+      .tab-btn.active {
+        border-left-color: #000;
+        border-bottom-color: transparent;
+      }
+    }
+
     .filter-section {
       background: white;
       padding: 20px;
@@ -330,15 +388,15 @@
     }
 
     .filter-row {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
       margin-bottom: 15px;
     }
 
     .filter-group {
-      flex: 1;
-      min-width: 200px;
+      display: flex;
+      flex-direction: column;
     }
 
     .filter-label {
@@ -358,7 +416,27 @@
 
     .filter-actions {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .filter-summary {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .filter-summary span {
+      padding: 5px 10px;
+      background: #f8f6f0;
+      border-radius: 4px;
+      border: 1px solid rgba(184, 134, 11, 0.2);
+    }
+
+    .filter-buttons {
+      display: flex;
       gap: 10px;
     }
 
@@ -391,12 +469,13 @@
       background: white;
       border-radius: 8px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      overflow: hidden;
+      overflow-x: auto;
       border: 1px solid darkgoldenrod;
     }
 
     table {
       width: 100%;
+      min-width: 1400px;
       border-collapse: separate;
       border-spacing: 0;
     }
@@ -415,6 +494,54 @@
       top: 0;
       color: #333;
       border-bottom: 2px solid darkgoldenrod;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.2s;
+    }
+
+    th:hover {
+      background-color: #e6d7b8;
+    }
+
+    th.sortable {
+      position: relative;
+      padding-right: 25px;
+      cursor: pointer;
+    }
+
+    th.sortable:hover::before {
+      content: 'Click to sort';
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 1000;
+    }
+
+    th.sortable::after {
+      content: '↕';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #999;
+    }
+
+    th.sortable.asc::after {
+      content: '↑';
+      color: darkgoldenrod;
+    }
+
+    th.sortable.desc::after {
+      content: '↓';
+      color: darkgoldenrod;
     }
 
     th:last-child, td:last-child {
@@ -460,6 +587,27 @@
       text-align: center;
       padding: 40px;
       color: #666;
+    }
+
+    .loading-indicator {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid darkgoldenrod;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .pagination {
@@ -583,6 +731,36 @@
     }
 
     /* Responsive styles */
+    @media (max-width: 1200px) {
+      .applications-table {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: darkgoldenrod #f0f0f0;
+      }
+      
+      .applications-table::-webkit-scrollbar {
+        height: 8px;
+      }
+      
+      .applications-table::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        border-radius: 4px;
+      }
+      
+      .applications-table::-webkit-scrollbar-thumb {
+        background: darkgoldenrod;
+        border-radius: 4px;
+      }
+      
+      .applications-table::-webkit-scrollbar-thumb:hover {
+        background: #b8860b;
+      }
+      
+      table {
+        min-width: 1400px;
+      }
+    }
+
     @media (max-width: 768px) {
       .dashboard {
         padding: 90px 0 40px;
@@ -591,12 +769,74 @@
       .dashboard-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
+      }
+
+      .filter-section {
+        padding: 15px;
+      }
+
+      .filter-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .filter-btn {
+        width: 100%;
+        padding: 12px;
       }
 
       th, td {
-        padding: 8px 10px;
-        font-size: 14px;
+        padding: 6px 8px;
+        font-size: 12px;
+        white-space: nowrap;
       }
+
+      .action-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      .modal-content {
+        width: 95%;
+        height: 80vh;
+        padding: 15px;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: 95%;
+        padding: 0 10px;
+      }
+
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+
+      th, td {
+        padding: 4px 6px;
+        font-size: 11px;
+      }
+
+      .action-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+    }
 
       .action-btn {
         padding: 4px 8px;
@@ -685,6 +925,19 @@
         </div>
       </div>
 
+      <!-- Course Tabs -->
+      <div class="course-tabs">
+        <button class="tab-btn active" data-course="all">
+          <i class="fas fa-list"></i> All Applications
+        </button>
+        <button class="tab-btn" data-course="Introduction to Python Programming and Algorithms">
+          <i class="fas fa-code"></i> Python Programming
+        </button>
+        <button class="tab-btn" data-course="Artificial Intelligence and Practical Applications in Africa">
+          <i class="fas fa-brain"></i> AI & Applications
+        </button>
+      </div>
+
       <div class="filter-section">
         <div class="filter-row">
           <div class="filter-group">
@@ -702,7 +955,22 @@
             </select>
           </div>
           <div class="filter-group">
-            <label for="filterAverage" class="filter-label">Average Score</label>
+            <label for="filterFaculty" class="filter-label">Faculty</label>
+            <select id="filterFaculty" class="filter-input">
+              <option value="">All Faculties</option>
+              <!-- Faculties will be populated by JavaScript -->
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterGender" class="filter-label">Gender</label>
+            <select id="filterGender" class="filter-input">
+              <option value="">All Genders</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="filterAverage" class="filter-label">Mark Average</label>
             <select id="filterAverage" class="filter-input">
               <option value="">All Scores</option>
               <option value="90">90+</option>
@@ -715,31 +983,117 @@
           </div>
         </div>
         <div class="filter-actions">
-          <button id="resetFilters" class="filter-btn reset">Reset Filters</button>
-          <button id="applyFilters" class="filter-btn apply">Apply Filters</button>
+          <div class="filter-summary">
+            <span id="totalCount">Total: 0</span>
+            <span id="filteredCount">Showing: 0</span>
+          </div>
+          <div class="filter-buttons">
+            <button id="resetFilters" class="filter-btn reset">Reset Filters</button>
+            <button id="applyFilters" class="filter-btn apply">Apply Filters</button>
+          </div>
         </div>
       </div>
 
-      <div class="applications-table">
+      <!-- All Applications Table -->
+      <div class="applications-table" id="allApplicationsTable">
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+          <div class="spinner"></div>
+          <p>Loading applications...</p>
+        </div>
         <table>
           <thead>
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Country</th>
-              <th>Course</th>
-              <th>Average</th>
-              <th>Date Applied</th>
+              <th class="sortable" data-sort="gl_code">GL Code</th>
+              <th class="sortable" data-sort="first_name">First Name</th>
+              <th class="sortable" data-sort="last_name">Last Name</th>
+              <th class="sortable" data-sort="email_address">Email</th>
+              <th class="sortable" data-sort="phone_number">Phone</th>
+              <th class="sortable" data-sort="gender">Gender</th>
+              <th class="sortable" data-sort="country">Country</th>
+              <th class="sortable" data-sort="faculty">Faculty</th>
+              <th class="sortable" data-sort="course">Course</th>
+              <th class="sortable" data-sort="year_of_study">Year</th>
+              <th class="sortable" data-sort="age">Age</th>
+              <th class="sortable" data-sort="mark_average">Mark Average</th>
+              <th class="sortable" data-sort="weekly_hours">Weekly Hours</th>
+              <th class="sortable" data-sort="timestamp">Date Applied</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="applicationsTableBody">
+          <tbody id="allApplicationsTableBody">
             <!-- Table rows will be populated by JavaScript -->
           </tbody>
         </table>
-        <div id="noResults" class="no-results" style="display: none;">
+        <div id="allNoResults" class="no-results" style="display: none;">
           No applications found matching your criteria.
+        </div>
+      </div>
+
+      <!-- Python Programming Applications Table -->
+      <div class="applications-table" id="pythonProgrammingTable" style="display: none;">
+        <div id="pythonLoadingIndicator" class="loading-indicator" style="display: none;">
+          <div class="spinner"></div>
+          <p>Loading Python Programming applications...</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="gl_code">GL Code</th>
+              <th class="sortable" data-sort="first_name">First Name</th>
+              <th class="sortable" data-sort="last_name">Last Name</th>
+              <th class="sortable" data-sort="email_address">Email</th>
+              <th class="sortable" data-sort="phone_number">Phone</th>
+              <th class="sortable" data-sort="gender">Gender</th>
+              <th class="sortable" data-sort="country">Country</th>
+              <th class="sortable" data-sort="faculty">Faculty</th>
+              <th class="sortable" data-sort="year_of_study">Year</th>
+              <th class="sortable" data-sort="age">Age</th>
+              <th class="sortable" data-sort="mark_average">Mark Average</th>
+              <th class="sortable" data-sort="weekly_hours">Weekly Hours</th>
+              <th class="sortable" data-sort="timestamp">Date Applied</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pythonProgrammingTableBody">
+            <!-- Table rows will be populated by JavaScript -->
+          </tbody>
+        </table>
+        <div id="pythonNoResults" class="no-results" style="display: none;">
+          No Python Programming applications found matching your criteria.
+        </div>
+      </div>
+
+      <!-- AI Applications Table -->
+      <div class="applications-table" id="aiApplicationsTable" style="display: none;">
+        <div id="aiLoadingIndicator" class="loading-indicator" style="display: none;">
+          <div class="spinner"></div>
+          <p>Loading AI & Applications...</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="gl_code">GL Code</th>
+              <th class="sortable" data-sort="first_name">First Name</th>
+              <th class="sortable" data-sort="last_name">Last Name</th>
+              <th class="sortable" data-sort="email_address">Email</th>
+              <th class="sortable" data-sort="phone_number">Phone</th>
+              <th class="sortable" data-sort="gender">Gender</th>
+              <th class="sortable" data-sort="country">Country</th>
+              <th class="sortable" data-sort="faculty">Faculty</th>
+              <th class="sortable" data-sort="year_of_study">Year</th>
+              <th class="sortable" data-sort="age">Age</th>
+              <th class="sortable" data-sort="mark_average">Mark Average</th>
+              <th class="sortable" data-sort="weekly_hours">Weekly Hours</th>
+              <th class="sortable" data-sort="timestamp">Date Applied</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="aiApplicationsTableBody">
+            <!-- Table rows will be populated by JavaScript -->
+          </tbody>
+        </table>
+        <div id="aiNoResults" class="no-results" style="display: none;">
+          No AI & Applications found matching your criteria.
         </div>
       </div>
 
@@ -753,7 +1107,7 @@
  <div class="modal-overlay" id="transcriptModal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">Transcript Viewer</h2>
+        <h2 class="modal-title">Application Details</h2>
         <button class="modal-close" id="closeModal">&times;</button>
       </div>
       <div id="transcriptContainer" class="transcript-container">
@@ -797,34 +1151,15 @@
     </div>
   </footer>
 
-  <!-- Firebase and Dashboard Script -->
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      query, 
-      where, 
-      getDocs,
-      orderBy 
-    } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  <!-- Supabase and Dashboard Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Supabase configuration
+    const SUPABASE_URL = 'https://oyfwswrblulmntxtodjh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95Zndzd3JibHVsbW50eHRvZGpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjg1NDgsImV4cCI6MjA2NzkwNDU0OH0.5yL99HsJoNYfRrDHtPEneoOrTItlKkSApcCbHAL3yWg';
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBVrk2_Uaao4IadkqdW_ZHAcqhKaHgfA7A",
-      authDomain: "glabootcamp.firebaseapp.com",
-      databaseURL: "https://glabootcamp-default-rtdb.firebaseio.com",
-      projectId: "glabootcamp",
-      storageBucket: "glabootcamp.appspot.com",
-      messagingSenderId: "1019798214965",
-      appId: "1:1019798214965:web:71815c385b7a4a9f0ed47c",
-      measurementId: "G-JJ1Y2NSK96"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    // Initialize Supabase client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.addEventListener('DOMContentLoaded', function() {
   // Check if user is logged in
@@ -848,6 +1183,8 @@
     const noResults = document.getElementById('noResults');
     const filterCountry = document.getElementById('filterCountry');
     const filterCourse = document.getElementById('filterCourse');
+    const filterFaculty = document.getElementById('filterFaculty');
+    const filterGender = document.getElementById('filterGender');
     const filterAverage = document.getElementById('filterAverage');
     const applyFilters = document.getElementById('applyFilters');
     const resetFilters = document.getElementById('resetFilters');
@@ -868,6 +1205,8 @@
     const applicationsPerPage = 10;
     let countries = [];
     let courses = [];
+    let faculties = [];
+    let currentSort = { field: null, direction: 'asc' };
 
     // List of African countries for the filter dropdown
     const africanCountries = [
@@ -888,17 +1227,200 @@
       // Initialize mobile menu toggle
       initMobileMenu();
       
-      // Load applications from Firebase
-      loadApplications();
-      
       // Set up event listeners
-      applyFilters.addEventListener('click', applyFiltersHandler);
-      resetFilters.addEventListener('click', resetFiltersHandler);
-      exportBtn.addEventListener('click', exportData);
-      closeModal.addEventListener('click', () => {
+      if (applyFilters) applyFilters.addEventListener('click', applyFiltersHandler);
+      if (resetFilters) resetFilters.addEventListener('click', resetFiltersHandler);
+      if (exportBtn) exportBtn.addEventListener('click', exportData);
+      if (closeModal) closeModal.addEventListener('click', () => {
         transcriptModal.classList.remove('active');
       });
+      
+      // Set up tab functionality
+      setupTabs();
+      
+      // Set up sorting
+      setupSorting();
+      
+      // Load applications from Supabase
+      loadApplications();
     });
+
+    // Set up tab functionality
+    function setupTabs() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const selectedCourse = this.getAttribute('data-course');
+          
+          // Remove active class from all tabs
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked tab
+          this.classList.add('active');
+          
+          // Show/hide appropriate tables
+          showTableForCourse(selectedCourse);
+          
+          // Update filters and display
+          updateFiltersForCourse(selectedCourse);
+        });
+      });
+    }
+
+    // Show table for selected course
+    function showTableForCourse(course) {
+      // Hide all tables
+      document.getElementById('allApplicationsTable').style.display = 'none';
+      document.getElementById('pythonProgrammingTable').style.display = 'none';
+      document.getElementById('aiApplicationsTable').style.display = 'none';
+      
+      // Show appropriate table
+      if (course === 'all') {
+        document.getElementById('allApplicationsTable').style.display = 'block';
+      } else if (course === 'Introduction to Python Programming and Algorithms') {
+        document.getElementById('pythonProgrammingTable').style.display = 'block';
+      } else if (course === 'Artificial Intelligence and Practical Applications in Africa') {
+        document.getElementById('aiApplicationsTable').style.display = 'block';
+      }
+    }
+
+    // Update filters and display for selected course
+    function updateFiltersForCourse(course) {
+      if (course === 'all') {
+        // Show all applications
+        filteredApplications = [...allApplications];
+      } else {
+        // Filter by course
+        filteredApplications = allApplications.filter(app => app.course === course);
+      }
+      
+      // Apply current sort
+      if (currentSort.field) {
+        sortApplications();
+      }
+      
+      // Reset to first page
+      currentPage = 1;
+      
+      // Display applications
+      displayApplications();
+    }
+
+    // Set up sorting functionality
+    function setupSorting() {
+      // Set up sorting for all tables
+      const allTables = [
+        document.getElementById('allApplicationsTable'),
+        document.getElementById('pythonProgrammingTable'),
+        document.getElementById('aiApplicationsTable')
+      ];
+      
+      allTables.forEach(table => {
+        if (table) {
+          const sortableHeaders = table.querySelectorAll('th.sortable');
+          sortableHeaders.forEach(th => {
+            th.addEventListener('click', function() {
+              const sortField = this.getAttribute('data-sort');
+              handleSort(sortField);
+            });
+          });
+        }
+      });
+    }
+
+    // Handle column sorting
+    function handleSort(field) {
+      console.log('Sorting by:', field);
+      
+      // Update sort direction
+      if (currentSort.field === field) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.field = field;
+        currentSort.direction = 'asc';
+      }
+      
+      // Update visual indicators
+      updateSortIndicators();
+      
+      // Sort the filtered applications
+      sortApplications();
+      
+      // Redisplay with new sort
+      currentPage = 1;
+      displayApplications();
+    }
+
+    // Update sort visual indicators
+    function updateSortIndicators() {
+      // Remove all sort classes from all tables
+      const allTables = [
+        document.getElementById('allApplicationsTable'),
+        document.getElementById('pythonProgrammingTable'),
+        document.getElementById('aiApplicationsTable')
+      ];
+      
+      allTables.forEach(table => {
+        if (table) {
+          const sortableHeaders = table.querySelectorAll('th.sortable');
+          sortableHeaders.forEach(th => {
+            th.classList.remove('asc', 'desc');
+          });
+        }
+      });
+      
+              // Add sort class to current column in all tables
+        if (currentSort.field) {
+          const allTables = [
+            document.getElementById('allApplicationsTable'),
+            document.getElementById('pythonProgrammingTable'),
+            document.getElementById('aiApplicationsTable')
+          ];
+        
+        allTables.forEach(table => {
+          if (table) {
+            const currentTh = table.querySelector(`th[data-sort="${currentSort.field}"]`);
+            if (currentTh) {
+              currentTh.classList.add(currentSort.direction);
+            }
+          }
+        });
+      }
+    }
+
+    // Sort applications based on current sort settings
+    function sortApplications() {
+      if (!currentSort.field) return;
+      
+      filteredApplications.sort((a, b) => {
+        let aValue = a[currentSort.field];
+        let bValue = b[currentSort.field];
+        
+        // Handle different data types
+        if (currentSort.field === 'timestamp') {
+          aValue = new Date(aValue);
+          bValue = new Date(bValue);
+        } else if (currentSort.field === 'age' || currentSort.field === 'year_of_study' || 
+                   currentSort.field === 'mark_average' || currentSort.field === 'weekly_hours') {
+          aValue = parseFloat(aValue) || 0;
+          bValue = parseFloat(bValue) || 0;
+        } else {
+          // String comparison
+          aValue = (aValue || '').toString().toLowerCase();
+          bValue = (bValue || '').toString().toLowerCase();
+        }
+        
+        // Compare values
+        if (aValue < bValue) {
+          return currentSort.direction === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return currentSort.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
 
     // Initialize mobile menu toggle
     function initMobileMenu() {
@@ -944,104 +1466,230 @@
       }
     }
 
-    // Load applications from Firebase
+    // Load applications from Supabase
     async function loadApplications() {
       try {
-        const q = query(collection(db, "bootcamp_applications"), orderBy("timestamp", "desc"));
-        const querySnapshot = await getDocs(q);
+        console.log('Loading applications from Supabase...');
+        
+        // Show loading indicator
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const applicationsTable = document.querySelector('.applications-table table');
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        if (applicationsTable) applicationsTable.style.display = 'none';
+        
+        const { data, error } = await supabase
+          .from('bootcamp_applications')
+          .select('*')
+          .order('timestamp', { ascending: false });
+        
+        if (error) {
+          console.error('Supabase error:', error);
+          throw error;
+        }
+        
+        console.log('Data received:', data);
         
         allApplications = [];
         countries = [];
         courses = [];
+        faculties = [];
         
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          allApplications.push({
-            id: doc.id,
-            firstName: data.firstName || 'N/A',
-            lastName: data.lastName || 'N/A',
-            email: data.email || 'N/A',
-            country: data.country || 'N/A',
-            course: data.course || 'N/A',
-            average: data.average || 'N/A',
-            timestamp: data.timestamp ? data.timestamp.toDate() : new Date(),
-            transcriptBase64: data.transcriptBase64 || ''
+        if (data && data.length > 0) {
+          data.forEach((app) => {
+            allApplications.push({
+              id: app.id,
+              gl_code: app.gl_code || 'N/A',
+              first_name: app.first_name || 'N/A',
+              last_name: app.last_name || 'N/A',
+              email_address: app.email_address || 'N/A',
+              phone_number: app.phone_number || 'N/A',
+              gender: app.gender || 'N/A',
+              country: app.country || 'N/A',
+              faculty: app.faculty || 'N/A',
+              course: app.course || 'N/A',
+              year_of_study: app.year_of_study || 'N/A',
+              age: app.age || 'N/A',
+              mark_average: app.mark_average || 'N/A',
+              weekly_hours: app.weekly_hours || 'N/A',
+              timestamp: app.timestamp ? new Date(app.timestamp) : new Date()
+            });
+            
+            // Collect unique countries
+            if (app.country && !countries.includes(app.country)) {
+              countries.push(app.country);
+            }
+            
+            // Collect unique courses
+            if (app.course && !courses.includes(app.course)) {
+              courses.push(app.course);
+            }
+            
+            // Collect unique faculties
+            if (app.faculty && !faculties.includes(app.faculty)) {
+              faculties.push(app.faculty);
+            }
           });
-          
-          // Collect unique countries
-          if (data.country && !countries.includes(data.country)) {
-            countries.push(data.country);
-          }
-          
-          // Collect unique courses
-          if (data.course && !courses.includes(data.course)) {
-            courses.push(data.course);
-          }
-        });
+        } else {
+          console.log('No data received from Supabase');
+        }
         
-        // Sort countries and courses
+        console.log('Processed applications:', allApplications.length);
+        console.log('Countries:', countries);
+        console.log('Courses:', courses);
+        console.log('Faculties:', faculties);
+        
+        // Sort arrays
         countries.sort();
         courses.sort();
+        faculties.sort();
         
         // Populate filter dropdowns
         populateFilterDropdowns();
         
         // Display all applications initially
         filteredApplications = [...allApplications];
+        
+        // Apply initial sort if set
+        if (currentSort.field) {
+          sortApplications();
+        }
+        
         displayApplications();
+        
+        // Hide loading indicator
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        if (applicationsTable) applicationsTable.style.display = 'table';
         
       } catch (error) {
         console.error("Error loading applications:", error);
         alert("Failed to load applications. Please check console for details.");
+        
+        // Hide loading indicator on error
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        if (applicationsTable) applicationsTable.style.display = 'table';
       }
     }
 
     // Populate filter dropdowns with unique values
     function populateFilterDropdowns() {
-      // Country filter
-      filterCountry.innerHTML = '<option value="">All Countries</option>';
-      countries.forEach(country => {
-        filterCountry.innerHTML += `<option value="${country}">${country}</option>`;
-      });
+      console.log('Populating filter dropdowns...');
       
-      // Add any African countries not in the data yet
-      africanCountries.forEach(country => {
-        if (!countries.includes(country)) {
-          filterCountry.innerHTML += `<option value="${country}">${country}</option>`;
+      try {
+        // Country filter
+        if (filterCountry) {
+          filterCountry.innerHTML = '<option value="">All Countries</option>';
+          countries.forEach(country => {
+            filterCountry.innerHTML += `<option value="${country}">${country}</option>`;
+          });
+          
+          // Add any African countries not in the data yet
+          africanCountries.forEach(country => {
+            if (!countries.includes(country)) {
+              filterCountry.innerHTML += `<option value="${country}">${country}</option>`;
+            }
+          });
+          console.log('Country filter populated with', countries.length, 'countries');
         }
-      });
-      
-      // Course filter
-      filterCourse.innerHTML = '<option value="">All Courses</option>';
-      courses.forEach(course => {
-        filterCourse.innerHTML += `<option value="${course}">${course}</option>`;
-      });
+        
+        // Course filter
+        if (filterCourse) {
+          filterCourse.innerHTML = '<option value="">All Courses</option>';
+          courses.forEach(course => {
+            filterCourse.innerHTML += `<option value="${course}">${course}</option>`;
+          });
+          console.log('Course filter populated with', courses.length, 'courses');
+        }
+
+        // Faculty filter
+        if (filterFaculty) {
+          filterFaculty.innerHTML = '<option value="">All Faculties</option>';
+          faculties.forEach(faculty => {
+            filterFaculty.innerHTML += `<option value="${faculty}">${faculty}</option>`;
+          });
+          console.log('Faculty filter populated with', faculties.length, 'faculties');
+        }
+      } catch (error) {
+        console.error('Error populating filter dropdowns:', error);
+      }
     }
 
     // Apply filters based on user selection
     function applyFiltersHandler() {
-      const countryFilter = filterCountry.value;
-      const courseFilter = filterCourse.value;
-      const averageFilter = filterAverage.value;
+      console.log('Applying filters...');
       
-      filteredApplications = allApplications.filter(app => {
+      const countryFilter = filterCountry ? filterCountry.value : '';
+      const courseFilter = filterCourse ? filterCourse.value : '';
+      const facultyFilter = filterFaculty ? filterFaculty.value : '';
+      const genderFilter = filterGender ? filterGender.value : '';
+      const averageFilter = filterAverage ? filterAverage.value : '';
+      
+      console.log('Filter values:', {
+        country: countryFilter,
+        course: courseFilter,
+        faculty: facultyFilter,
+        gender: genderFilter,
+        average: averageFilter
+      });
+      
+      // Get the currently active tab
+      const activeTab = document.querySelector('.tab-btn.active');
+      const selectedCourse = activeTab ? activeTab.getAttribute('data-course') : 'all';
+      
+      // Start with applications based on selected tab
+      let baseApplications = selectedCourse === 'all' ? [...allApplications] : allApplications.filter(app => app.course === selectedCourse);
+      
+      filteredApplications = baseApplications.filter(app => {
         // Country filter
-        if (countryFilter && app.country !== countryFilter) return false;
+        if (countryFilter && app.country !== countryFilter) {
+          console.log(`Filtered out: ${app.first_name} ${app.last_name} - Country mismatch (${app.country} vs ${countryFilter})`);
+          return false;
+        }
         
-        // Course filter
-        if (courseFilter && app.course !== courseFilter) return false;
+        // Course filter (only apply if not on a specific course tab)
+        if (selectedCourse === 'all' && courseFilter && app.course !== courseFilter) {
+          console.log(`Filtered out: ${app.first_name} ${app.last_name} - Course mismatch (${app.course} vs ${courseFilter})`);
+          return false;
+        }
+        
+        // Faculty filter
+        if (facultyFilter && app.faculty !== facultyFilter) {
+          console.log(`Filtered out: ${app.first_name} ${app.last_name} - Faculty mismatch (${app.faculty} vs ${facultyFilter})`);
+          return false;
+        }
+        
+        // Gender filter
+        if (genderFilter && app.gender !== genderFilter) {
+          console.log(`Filtered out: ${app.first_name} ${app.last_name} - Gender mismatch (${app.gender} vs ${genderFilter})`);
+          return false;
+        }
         
         // Average filter
         if (averageFilter) {
-          const averageNum = parseFloat(app.average);
-          if (isNaN(averageNum)) return false;
+          const averageNum = parseFloat(app.mark_average);
+          if (isNaN(averageNum)) {
+            console.log(`Filtered out: ${app.first_name} ${app.last_name} - Invalid average (${app.mark_average})`);
+            return false;
+          }
           
-          if (averageFilter === "40" && averageNum >= 40) return false;
-          if (averageFilter !== "40" && averageNum < parseFloat(averageFilter)) return false;
+          if (averageFilter === "40" && averageNum >= 40) {
+            console.log(`Filtered out: ${app.first_name} ${app.last_name} - Average too high (${averageNum} >= 40)`);
+            return false;
+          }
+          if (averageFilter !== "40" && averageNum < parseFloat(averageFilter)) {
+            console.log(`Filtered out: ${app.first_name} ${app.last_name} - Average too low (${averageNum} < ${averageFilter})`);
+            return false;
+          }
         }
         
         return true;
       });
+      
+      console.log(`Filtered applications: ${filteredApplications.length} out of ${baseApplications.length}`);
+      
+      // Apply current sort to filtered results
+      if (currentSort.field) {
+        sortApplications();
+      }
       
       currentPage = 1;
       displayApplications();
@@ -1051,23 +1699,61 @@
     function resetFiltersHandler() {
       filterCountry.value = "";
       filterCourse.value = "";
+      filterFaculty.value = "";
+      filterGender.value = "";
       filterAverage.value = "";
       
-      filteredApplications = [...allApplications];
+      // Get the currently active tab
+      const activeTab = document.querySelector('.tab-btn.active');
+      const selectedCourse = activeTab ? activeTab.getAttribute('data-course') : 'all';
+      
+      // Reset to applications based on selected tab
+      filteredApplications = selectedCourse === 'all' ? [...allApplications] : allApplications.filter(app => app.course === selectedCourse);
+      
+      // Apply current sort to reset results
+      if (currentSort.field) {
+        sortApplications();
+      }
+      
       currentPage = 1;
       displayApplications();
     }
 
     // Display applications in the table with pagination
     function displayApplications() {
+      // Update counts
+      const totalCount = document.getElementById('totalCount');
+      const filteredCount = document.getElementById('filteredCount');
+      
+      if (totalCount) totalCount.textContent = `Total: ${allApplications.length}`;
+      if (filteredCount) filteredCount.textContent = `Showing: ${filteredApplications.length}`;
+      
       if (filteredApplications.length === 0) {
-        applicationsTableBody.innerHTML = '';
-        noResults.style.display = 'block';
+        // Clear all table bodies
+        document.getElementById('allApplicationsTableBody').innerHTML = '';
+        document.getElementById('pythonProgrammingTableBody').innerHTML = '';
+        document.getElementById('aiApplicationsTableBody').innerHTML = '';
+        
+        // Show appropriate no results message
+        const activeTab = document.querySelector('.tab-btn.active');
+        const selectedCourse = activeTab ? activeTab.getAttribute('data-course') : 'all';
+        
+        if (selectedCourse === 'all') {
+          document.getElementById('allNoResults').style.display = 'block';
+        } else if (selectedCourse === 'Introduction to Python Programming and Algorithms') {
+          document.getElementById('pythonNoResults').style.display = 'block';
+        } else if (selectedCourse === 'Artificial Intelligence and Practical Applications in Africa') {
+          document.getElementById('aiNoResults').style.display = 'block';
+        }
+        
         pagination.innerHTML = '';
         return;
       }
       
-      noResults.style.display = 'none';
+      // Hide all no results messages
+      document.getElementById('allNoResults').style.display = 'none';
+      document.getElementById('pythonNoResults').style.display = 'none';
+      document.getElementById('aiNoResults').style.display = 'none';
       
       // Calculate pagination
       const totalPages = Math.ceil(filteredApplications.length / applicationsPerPage);
@@ -1075,8 +1761,24 @@
       const endIndex = Math.min(startIndex + applicationsPerPage, filteredApplications.length);
       const paginatedApplications = filteredApplications.slice(startIndex, endIndex);
       
-      // Clear table
-      applicationsTableBody.innerHTML = '';
+      // Get the active tab to determine which table to populate
+      const activeTab = document.querySelector('.tab-btn.active');
+      const selectedCourse = activeTab ? activeTab.getAttribute('data-course') : 'all';
+      
+      // Clear all table bodies
+      document.getElementById('allApplicationsTableBody').innerHTML = '';
+      document.getElementById('pythonProgrammingTableBody').innerHTML = '';
+      document.getElementById('aiApplicationsTableBody').innerHTML = '';
+      
+      // Populate appropriate table based on selected course
+      let targetTableBody;
+      if (selectedCourse === 'all') {
+        targetTableBody = document.getElementById('allApplicationsTableBody');
+      } else if (selectedCourse === 'Introduction to Python Programming and Algorithms') {
+        targetTableBody = document.getElementById('pythonProgrammingTableBody');
+      } else if (selectedCourse === 'Artificial Intelligence and Practical Applications in Africa') {
+        targetTableBody = document.getElementById('aiApplicationsTableBody');
+      }
       
       // Populate table
       paginatedApplications.forEach(app => {
@@ -1091,27 +1793,38 @@
           minute: '2-digit'
         });
         
-        row.innerHTML = `
-          <td>${app.firstName}</td>
-          <td>${app.lastName}</td>
-          <td>${app.email}</td>
+        // Create row content - include course column only for "all" tab
+        let rowContent = `
+          <td>${app.gl_code}</td>
+          <td>${app.first_name}</td>
+          <td>${app.last_name}</td>
+          <td>${app.email_address}</td>
+          <td>${app.phone_number}</td>
+          <td>${app.gender}</td>
           <td>${app.country}</td>
-          <td>${app.course}</td>
-          <td>${app.average}</td>
+          <td>${app.faculty}</td>
+        `;
+        
+        // Add course column only for "all" tab
+        if (selectedCourse === 'all') {
+          rowContent += `<td>${app.course}</td>`;
+        }
+        
+        rowContent += `
+          <td>${app.year_of_study}</td>
+          <td>${app.age}</td>
+          <td>${app.mark_average}%</td>
+          <td>${app.weekly_hours}h</td>
           <td>${formattedDate}</td>
           <td>
-            <button class="action-btn view" data-id="${app.id}" data-transcript="${app.transcriptBase64}">
-              <i class="fas fa-eye"></i> View
+            <button class="action-btn view" data-id="${app.id}">
+              <i class="fas fa-eye"></i> View Details
             </button>
-            ${app.transcriptBase64 && app.transcriptBase64 !== 'No transcript uploaded' ? 
-              `<button class="action-btn download" data-id="${app.id}" data-transcript="${app.transcriptBase64}">
-                <i class="fas fa-download"></i> Download
-              </button>` : ''
-            }
           </td>
         `;
         
-        applicationsTableBody.appendChild(row);
+        row.innerHTML = rowContent;
+        targetTableBody.appendChild(row);
       });
       
       // Set up event listeners for view/download buttons
@@ -1121,47 +1834,61 @@
       generatePagination(totalPages);
     }
 
-    // Set up event listeners for view/download buttons
+    // Set up event listeners for view buttons
     function setupActionButtons() {
-      document.querySelectorAll('.action-btn.view').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const appId = this.getAttribute('data-id');
-          const transcriptBase64 = this.getAttribute('data-transcript');
-          viewTranscript(appId, transcriptBase64);
-        });
-      });
+      // Set up action buttons for all tables
+      const allTables = [
+        document.getElementById('allApplicationsTable'),
+        document.getElementById('pythonProgrammingTable'),
+        document.getElementById('aiApplicationsTable')
+      ];
       
-      document.querySelectorAll('.action-btn.download').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const appId = this.getAttribute('data-id');
-          const transcriptBase64 = this.getAttribute('data-transcript');
-          downloadTranscript(appId, transcriptBase64);
-        });
+      allTables.forEach(table => {
+        if (table) {
+          const viewButtons = table.querySelectorAll('.action-btn.view');
+          viewButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+              const appId = this.getAttribute('data-id');
+              viewApplicationDetails(appId);
+            });
+          });
+        }
       });
     }
 
-    // View transcript in modal
-    function viewTranscript(appId, transcriptBase64) {
+    // View application details in modal
+    function viewApplicationDetails(appId) {
       const application = filteredApplications.find(app => app.id === appId);
       
       if (!application) return;
       
-      // Display transcript
-      transcriptContent.innerHTML = '';
-      
-      if (transcriptBase64 && transcriptBase64 !== 'No transcript uploaded') {
-        // Create iframe for PDF with maximum size
-        const iframe = document.createElement('iframe');
-        iframe.className = 'transcript-iframe';
-        iframe.src = transcriptBase64;
-        transcriptContent.appendChild(iframe);
-      } else {
-        // Show message if no transcript
-        const message = document.createElement('div');
-        message.className = 'transcript-unavailable';
-        message.innerHTML = '<p>No transcript available for this application</p>';
-        transcriptContent.appendChild(message);
-      }
+      // Display application details
+      transcriptContent.innerHTML = `
+        <div style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+          <h3 style="color: darkgoldenrod; margin-bottom: 20px;">Application Details</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+              <h4>Personal Information</h4>
+              <p><strong>GL Code:</strong> ${application.gl_code}</p>
+              <p><strong>Name:</strong> ${application.first_name} ${application.last_name}</p>
+              <p><strong>Email:</strong> ${application.email_address}</p>
+              <p><strong>Phone:</strong> ${application.phone_number}</p>
+              <p><strong>Gender:</strong> ${application.gender}</p>
+              <p><strong>Age:</strong> ${application.age}</p>
+              <p><strong>Country:</strong> ${application.country}</p>
+            </div>
+            <div>
+              <h4>Academic Information</h4>
+              <p><strong>Faculty:</strong> ${application.faculty}</p>
+              <p><strong>Course:</strong> ${application.course}</p>
+              <p><strong>Year of Study:</strong> ${application.year_of_study}</p>
+              <p><strong>Mark Average:</strong> ${application.mark_average}%</p>
+              <p><strong>Weekly Hours Available:</strong> ${application.weekly_hours}h</p>
+              <p><strong>Date Applied:</strong> ${application.timestamp.toLocaleDateString()}</p>
+            </div>
+          </div>
+        </div>
+      `;
       
       // Show modal
       transcriptModal.classList.add('active');
@@ -1185,23 +1912,7 @@
     }, 1000); // Display for 3 seconds
   }
 
-    // Download transcript
-    function downloadTranscript(appId, transcriptBase64) {
-      const application = filteredApplications.find(app => app.id === appId);
-      
-      if (!application || !transcriptBase64 || transcriptBase64 === 'No transcript uploaded') {
-        alert('No transcript available for download');
-        return;
-      }
-      
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = transcriptBase64;
-      link.download = `transcript_${application.firstName}_${application.lastName}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+
 
     // Generate pagination controls
     function generatePagination(totalPages) {
@@ -1304,7 +2015,7 @@
       }
       
       // Prepare CSV content
-      let csvContent = "First Name,Last Name,Email,Country,Course,Average,Date Applied\n";
+      let csvContent = "GL Code,First Name,Last Name,Email,Phone,Gender,Country,Faculty,Course,Year of Study,Age,Mark Average,Weekly Hours,Date Applied\n";
       
       filteredApplications.forEach(app => {
         const formattedDate = app.timestamp.toLocaleDateString('en-US', {
@@ -1315,7 +2026,7 @@
           minute: '2-digit'
         });
         
-        csvContent += `"${app.firstName}","${app.lastName}","${app.email}","${app.country}","${app.course}","${app.average}","${formattedDate}"\n`;
+        csvContent += `"${app.gl_code}","${app.first_name}","${app.last_name}","${app.email_address}","${app.phone_number}","${app.gender}","${app.country}","${app.faculty}","${app.course}","${app.year_of_study}","${app.age}","${app.mark_average}","${app.weekly_hours}","${formattedDate}"\n`;
       });
       
       // Create download link
