@@ -21,6 +21,7 @@
       font-family: 'Poppins', sans-serif;
       color: #000;
       background-color: #f8f9fa;
+      overflow-x: hidden; /* Prevent horizontal scroll */
     }
 
     .container {
@@ -39,15 +40,16 @@
       list-style: none;
     }
 
-    /* Header Styles */
+    /* Header Styles - Fixed positioning issues */
     header {
-      position: absolute;
+      position: fixed; /* Changed from absolute to fixed */
       width: 100%;
       top: 0;
       left: 0;
       padding: 20px 0;
       z-index: 1000;
       background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
     .logo-container {
@@ -132,10 +134,10 @@
       transform: translateY(-50%);
     }
 
-    /* Apply Hero Section */
+    /* Apply Hero Section - Fixed height and padding */
     .apply-hero {
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -145,6 +147,7 @@
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      padding-top: 100px; /* Account for fixed header */
     }
 
     .apply-hero::before {
@@ -169,6 +172,8 @@
       justify-content: center;
       padding: 2rem;
       width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .floating-warning {
@@ -206,7 +211,8 @@
       background: white;
       border-radius: 10px;
       padding: 40px 30px;
-      width: 350px;
+      width: 100%;
+      max-width: 350px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
@@ -297,14 +303,14 @@
       transform: scale(1.05);
     }
 
-    /* Application Form */
+    /* Application Form - Fixed positioning */
     .application-form-container {
       display: none;
       position: relative;
       z-index: 2;
       width: 100%;
       max-width: 600px;
-      margin: 100px auto 2rem;
+      margin: 120px auto 2rem; /* Increased top margin for fixed header */
       padding: 2rem;
     }
 
@@ -343,7 +349,7 @@
       color: #b8860b;
     }
 
-    /* Popup Styles */
+    /* Popup Styles - Fixed z-index */
     .popup-overlay {
       position: fixed;
       top: 0;
@@ -351,7 +357,7 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.7);
-      z-index: 999;
+      z-index: 9999; /* Increased z-index */
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -367,13 +373,13 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100%;
+      width: 90%;
       max-width: 500px;
       background: white;
       border-radius: 10px;
       padding: 30px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      z-index: 1000;
+      z-index: 10000; /* Increased z-index */
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -423,13 +429,13 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100%;
+      width: 90%;
       max-width: 500px;
       background: white;
       border-radius: 10px;
       padding: 30px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      z-index: 1000;
+      z-index: 10000; /* Increased z-index */
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -628,11 +634,12 @@
       cursor: not-allowed;
     }
 
-    /* Footer Styles */
+    /* Footer Styles - Added margin-top */
     footer {
       background-color: #111;
       color: #000;
       padding: 60px 0 20px;
+      margin-top: 2rem; /* Added margin to prevent overlap */
     }
 
     .footer-content {
@@ -697,18 +704,27 @@
       font-size: 0.9rem;
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - Enhanced mobile fixes */
     @media (max-width: 992px) {
       .courses-grid {
         gap: 40px;
       }
+
+      .course-card {
+        width: 100%;
+        max-width: 450px;
+      }
     }
 
     @media (max-width: 768px) {
+      body {
+        padding-top: 0; /* Remove any default padding */
+      }
+
       header {
-        position: relative;
+        position: fixed;
         background-color: #fff;
-        padding: 15px 0;
+        padding: 10px 0;
       }
       
       .logo-img {
@@ -729,6 +745,7 @@
         background: rgba(255, 255, 255, 0.95);
         padding: 80px 30px 30px;
         transition: transform 0.3s ease;
+        backdrop-filter: blur(10px);
       }
       
       .mobile-toggle {
@@ -753,19 +770,25 @@
       }
 
       .apply-hero {
-        height: auto;
-        padding: 120px 0 60px;
+        min-height: 100vh;
+        padding: 80px 20px 40px; /* Adjusted padding for mobile */
         background-size: cover;
+        background-attachment: scroll; /* Better mobile performance */
       }
       
-      .courses-grid {
+      .courses-container {
         padding: 1rem;
+      }
+
+      .courses-grid {
+        padding: 1rem 0;
         gap: 30px;
       }
       
       .course-card {
         width: 100%;
-        max-width: 350px;
+        max-width: none;
+        padding: 30px 20px;
       }
 
       .application-form {
@@ -773,16 +796,54 @@
       }
 
       .application-form-container {
-        margin: 80px auto 2rem;
+        margin: 100px auto 2rem; /* Adjusted for mobile */
+        padding: 1rem;
       }
 
       .warning-popup,
       .success-popup {
-        width: 90%;
+        width: 95%;
+        padding: 20px;
+        margin: 0 10px;
+      }
+
+      .floating-warning {
+        margin: 0 10px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
       }
     }
 
-    /* Intro animation */
+    @media (max-width: 480px) {
+      .apply-hero {
+        padding: 70px 10px 30px;
+      }
+
+      .courses-container {
+        padding: 0.5rem;
+      }
+
+      .course-card {
+        padding: 25px 15px;
+      }
+
+      .course-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .application-form-container {
+        padding: 0.5rem;
+      }
+
+      .application-form {
+        padding: 20px 15px;
+      }
+    }
+
+    /* Intro animation - Fixed z-index */
     .intro-overlay {
       position: fixed;
       top: 0;
@@ -793,7 +854,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2000;
+      z-index: 20000; /* Highest z-index */
       backdrop-filter: blur(10px);
       opacity: 1;
       transition: opacity 0.5s ease;
@@ -835,6 +896,16 @@
     html {
       scroll-behavior: smooth;
     }
+
+    /* Additional fixes for content overflow */
+    .container {
+      overflow-x: hidden;
+    }
+
+    /* Ensure all positioned elements stay within bounds */
+    * {
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -846,7 +917,6 @@
 
   <!-- Popup Overlay -->
   <div class="popup-overlay" id="popupOverlay"></div>
-
 
   <header>
     <div class="container">
@@ -901,52 +971,6 @@
         </a>
       </div>
     </div>
-    
-    <!-- Application Form Container - COMMENTED OUT -->
-    <!--
-    <div class="application-form-container" id="applicationFormContainer">
-      <div class="application-form">
-        <div class="form-header">
-          <h3 id="courseTitle">Application Form</h3>
-          <button class="back-btn" id="backButton">
-            <i class="fas fa-arrow-left"></i>
-          </button>
-        </div>
-        <form id="applicationFormElement">
-          <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" required>
-          </div>
-          <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" required>
-          </div>
-          <div class="form-group country-search-container">
-            <label for="country">Country</label>
-            <input type="text" id="country" autocomplete="off" required placeholder="Your Country">
-            <div class="country-search-results" id="countryResults"></div>
-          </div>
-          <div class="form-group">
-            <label for="average">Current Semester Average</label>
-            <input type="number" id="average" required placeholder="%" min="0" max="100" step="0.1">
-          </div>
-          <div class="form-group">
-            <label for="academicTranscript">Academic Transcript (PDF only, max 5MB)</label>
-            <label class="file-upload-label" for="academicTranscript">
-              <i class="fas fa-cloud-upload-alt"></i> Choose PDF File
-            </label>
-            <input type="file" id="academicTranscript" class="file-upload-input" accept=".pdf" required>
-            <div class="file-name" id="fileName">No file chosen</div>
-          </div>
-          <button type="submit" class="apply-btn" id="submitBtn">APPLY NOW</button>
-        </form>
-      </div>
-    </div>
-    -->
   </section>
 
   <footer id="contact">
@@ -1089,212 +1113,50 @@
         });
       }
 
-      // Country search functionality
-      const countryInput = document.getElementById('country');
-      const countryResults = document.getElementById('countryResults');
-
-      if (countryInput && countryResults) {
-        countryInput.addEventListener('input', function() {
-          const searchTerm = this.value.toLowerCase();
-          const filteredCountries = africanCountries.filter(country => 
-            country.toLowerCase().includes(searchTerm)
-          ).slice(0, 5);
-          
-          countryResults.innerHTML = '';
-          
-          if (searchTerm && filteredCountries.length > 0) {
-            filteredCountries.forEach(country => {
-              const option = document.createElement('div');
-              option.className = 'country-option';
-              option.textContent = country;
-              option.addEventListener('click', function() {
-                countryInput.value = country;
-                countryResults.classList.remove('show');
-              });
-              countryResults.appendChild(option);
-            });
-            countryResults.classList.add('show');
-          } else {
-            countryResults.classList.remove('show');
-          }
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!countryInput.contains(e.target) && !countryResults.contains(e.target)) {
-            countryResults.classList.remove('show');
-          }
-        });
-      }
-
-      // Form Handling
-      let selectedCourse = '';
-      
-      function showForm(course) {
-        selectedCourse = course;
-        document.getElementById('courseTitle').textContent = `Apply for ${course}`;
-        document.getElementById('coursesContainer').style.display = 'none';
-        document.getElementById('applicationFormContainer').style.display = 'block';
-      }
-
-      function hideForm() {
-        document.getElementById('applicationFormContainer').style.display = 'none';
-        document.getElementById('coursesContainer').style.display = 'flex';
-      }
-
-      // Popup Management
-      const popupOverlay = document.getElementById('popupOverlay');
-      const warningPopup = document.getElementById('warningPopup');
-      const warningMessage = document.getElementById('warningMessage');
-      const warningOkBtn = document.getElementById('warningOkBtn');
-      const successPopup = document.getElementById('successPopup');
-      const successMessage = document.getElementById('successMessage');
-      const successOkBtn = document.getElementById('successOkBtn');
-      
-      function showPopup(popup) {
-        popupOverlay.classList.add('active');
-        popup.classList.add('active');
-      }
-      
-      function hidePopup(popup) {
-        popupOverlay.classList.remove('active');
-        popup.classList.remove('active');
-      }
-      
-      warningOkBtn.addEventListener('click', function() {
-        hidePopup(warningPopup);
-      });
-      
-      successOkBtn.addEventListener('click', function() {
-        hidePopup(successPopup);
-        hideForm();
-      });
-
-      // Initialize click handlers for course cards - COMMENTED OUT (now using direct Google Forms links)
-      /*
-      document.querySelectorAll('.course-card').forEach(card => {
-        card.addEventListener('click', function() {
-          const courseTitle = this.getAttribute('data-course');
-          showForm(courseTitle);
-        });
-      });
-      */
-
-      // Back button
-      const backButton = document.getElementById('backButton');
-      if (backButton) {
-        backButton.addEventListener('click', function(e) {
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
           e.preventDefault();
-          hideForm();
-        });
-      }
-
-      // File upload display
-      const fileInput = document.getElementById('academicTranscript');
-      const fileNameDisplay = document.getElementById('fileName');
-      const submitBtn = document.getElementById('submitBtn');
-
-      if (fileInput && fileNameDisplay) {
-        fileInput.addEventListener('change', function() {
-          if (this.files && this.files.length > 0) {
-            // Check file size (max 750KB for Base64)
-            if (this.files[0].size > 750 * 1024) {
-              alert('File size exceeds 750KB limit. Please choose a smaller file.');
-              this.value = '';
-              fileNameDisplay.textContent = 'No file chosen';
-              return;
-            }
-            
-            // Check file type
-            if (!this.files[0].name.toLowerCase().endsWith('.pdf')) {
-              alert('Only PDF files are allowed.');
-              this.value = '';
-              fileNameDisplay.textContent = 'No file chosen';
-              return;
-            }
-            
-            fileNameDisplay.textContent = this.files[0].name;
-          } else {
-            fileNameDisplay.textContent = 'No file chosen';
-          }
-        });
-      }
-
-      // Form submission
-      const form = document.getElementById('applicationFormElement');
-      if (form) {
-        form.addEventListener('submit', async function(e) {
-          e.preventDefault();
-          
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Submitting...';
-          
-          try {
-            // Get form values
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim().toLowerCase();
-            const country = document.getElementById('country').value.trim();
-            const average = document.getElementById('average').value;
-            const file = document.getElementById('academicTranscript').files[0];
-            const course = document.getElementById('courseTitle').textContent.replace('Apply for ', '');
-            
-            // Determine qualification type
-            let qualificationType = course.includes('Python Programming') ? 
-              'Introduction to Python Programming and Algorithms' : 
-              'Artificial Intelligence and Practical Applications in Africa';
-
-            // Check for existing application
-            const q = query(collection(db, "bootcamp_applications"), where("email", "==", email));
-            const querySnapshot = await getDocs(q);
-            
-            if (!querySnapshot.empty) {
-              const existingApp = querySnapshot.docs[0].data();
-              warningMessage.textContent = `You have already applied for: ${existingApp.qualificationType}.`;
-              showPopup(warningPopup);
-              return;
-            }
-
-            // Process file upload as Base64
-            let transcriptBase64 = '';
-            if (file) {
-              try {
-                transcriptBase64 = await fileToBase64(file);
-              } catch (fileError) {
-                console.error("File conversion error:", fileError);
-                alert("File processing failed but we'll submit your application without it.");
-              }
-            }
-
-            // Add new application to Firestore
-            await addDoc(collection(db, "bootcamp_applications"), {
-              firstName,
-              lastName,
-              email,
-              country,
-              average,
-              course,
-              qualificationType,
-              transcriptBase64: transcriptBase64 || 'No transcript uploaded',
-              timestamp: new Date(),
-              uploadMethod: 'base64'
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
             });
-
-            // Show success
-            successMessage.textContent = `Congratulations! You have successfully applied for ${qualificationType}.`;
-            showPopup(successPopup);
-            form.reset();
-            if (fileNameDisplay) fileNameDisplay.textContent = 'No file chosen';
-            
-          } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again.");
-          } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'APPLY NOW';
           }
         });
-      }
+      });
+
+      // Handle window resize to prevent layout issues
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          // Force repaint to fix any layout issues
+          document.body.style.display = 'none';
+          document.body.offsetHeight; // Trigger reflow
+          document.body.style.display = '';
+        }, 250);
+      });
+
+      // Prevent horizontal scroll on mobile
+      document.addEventListener('touchmove', function(e) {
+        if (e.touches.length > 1) {
+          e.preventDefault();
+        }
+      });
+
+      // Add loading state management
+      window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+      });
+
+      // Error handling for missing images
+      document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+          this.style.display = 'none';
+        });
+      });
     });
   </script>
 </body>
